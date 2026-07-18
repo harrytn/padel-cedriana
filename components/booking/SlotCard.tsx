@@ -37,27 +37,27 @@ export default function SlotCard({ slot, isSelected, onClick, isPast }: SlotCard
   let isOccupied = false;
 
   if (isPast) {
-    stateClasses = "bg-slate-200/55 border border-white/30 text-slate-600 cursor-not-allowed";
+    stateClasses = "bg-[#ececec] border border-[#d0d0d0] text-[#999999] cursor-not-allowed";
     statusOrPrice = t.passed;
   } else if (!isAvailable) {
-    stateClasses = "bg-amber-100/70 border border-amber-300 text-slate-800 cursor-not-allowed";
+    stateClasses = "bg-[#e0e0e0] border border-[#cccccc] text-[#555555] cursor-not-allowed";
     statusOrPrice = t.book_booked;
     isOccupied = true;
   } else if (isSelected) {
-    stateClasses = "bg-[#E41E2D] border border-red-500 text-white shadow-xl";
+    stateClasses = "bg-[#111111] border border-[#000000] text-white shadow-xl";
     statusOrPrice = formattedPrice;
     showReserveCta = true;
   } else {
-    stateClasses = "bg-white/75 border border-cyan-400 text-slate-800 hover:bg-white hover:shadow-xl";
+    stateClasses = "bg-white border border-[#aaaaaa] text-[#111111] hover:bg-[#f5f5f5] hover:shadow-md";
     statusOrPrice = formattedPrice;
     showReserveCta = true;
   }
 
-  const iconColor = isPast ? "text-slate-500" : isOccupied ? "text-slate-800/70" : isSelected ? "text-white" : "text-cyan-600";
-  const durationColor = isPast ? "text-slate-500" : isOccupied ? "text-slate-800/70" : isSelected ? "text-white/90" : "text-slate-500";
-  const priceColor = isPast ? "text-slate-600" : isOccupied ? "text-slate-800" : isSelected ? "text-white" : "text-cyan-600";
-  const ctaColor = isSelected ? "text-white/90" : "text-cyan-600";
-  const timeColor = isSelected ? "text-white" : isOccupied ? "text-slate-800" : isPast ? "text-slate-500" : "text-slate-800";
+  const iconColor = isPast ? "text-[#aaaaaa]" : isOccupied ? "text-[#888888]" : isSelected ? "text-white" : "text-[#555555]";
+  const durationColor = isPast ? "text-[#aaaaaa]" : isOccupied ? "text-[#888888]" : isSelected ? "text-white/80" : "text-[#888888]";
+  const priceColor = isPast ? "text-[#aaaaaa]" : isOccupied ? "text-[#555555]" : isSelected ? "text-white" : "text-[#222222]";
+  const ctaColor = isSelected ? "text-white/90" : "text-[#555555]";
+  const timeColor = isSelected ? "text-white" : isOccupied ? "text-[#555555]" : isPast ? "text-[#aaaaaa]" : "text-[#111111]";
 
   return (
     <button
@@ -75,7 +75,7 @@ export default function SlotCard({ slot, isSelected, onClick, isPast }: SlotCard
               </span>
             </div>
             {isPeak && (
-              <span className={isSelected ? "bg-white/20 text-white text-[10px] font-bold px-[8px] py-[4px] rounded-full flex items-center gap-[4px] shrink-0" : "bg-amber-100 text-amber-700 border border-amber-300 text-[10px] font-bold px-[8px] py-[4px] rounded-full flex items-center gap-[4px] shrink-0"}>
+              <span className={isSelected ? "bg-white/20 text-white text-[10px] font-bold px-[8px] py-[4px] rounded-full flex items-center gap-[4px] shrink-0" : "bg-[#e0e0e0] text-[#555555] border border-[#cccccc] text-[10px] font-bold px-[8px] py-[4px] rounded-full flex items-center gap-[4px] shrink-0"}>
                 <Zap size={10} fill="currentColor" /> Peak
               </span>
             )}

@@ -130,7 +130,7 @@ export interface Translations {
 
 export const translations: Record<Language, Translations> = {
   fr: {
-    nav_title: "Caribbean World Djerba",
+    nav_title: "Hotel Name",
     nav_subtitle: "Court de Padel",
 
     book_title: "Réserver un Court de Padel",
@@ -248,7 +248,7 @@ export const translations: Record<Language, Translations> = {
   },
 
   en: {
-    nav_title: "Caribbean World Djerba",
+    nav_title: "Hotel Name",
     nav_subtitle: "Padel Court",
 
     book_title: "Book a Padel Court",
@@ -366,7 +366,7 @@ export const translations: Record<Language, Translations> = {
   },
 
   de: {
-    nav_title: "Caribbean World Djerba",
+    nav_title: "Hotel Name",
     nav_subtitle: "Padel-Platz",
 
     book_title: "Padel-Platz Buchen",

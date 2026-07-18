@@ -34,11 +34,11 @@ function todayISO(): string {
 }
 
 const STATUS_COLORS: Record<string, { bg: string; text: string; labelKey: string }> = {
-  PAID: { bg: "#dcfce7", text: "#166534", labelKey: "status_paid" },
-  PENDING_PAYMENT: { bg: "#fef3c7", text: "#92400e", labelKey: "status_pending" },
-  CANCELLED: { bg: "#fee2e2", text: "#991b1b", labelKey: "status_cancelled" },
-  ARRIVED: { bg: "#dbeafe", text: "#1e40af", labelKey: "status_arrived" },
-  NO_SHOW: { bg: "#f3f4f6", text: "#374151", labelKey: "status_no_show" },
+  PAID: { bg: "#f0f0f0", text: "#333333", labelKey: "status_paid" },
+  PENDING_PAYMENT: { bg: "#e8e8e8", text: "#555555", labelKey: "status_pending" },
+  CANCELLED: { bg: "#e0e0e0", text: "#888888", labelKey: "status_cancelled" },
+  ARRIVED: { bg: "#d5d5d5", text: "#222222", labelKey: "status_arrived" },
+  NO_SHOW: { bg: "#eeeeee", text: "#777777", labelKey: "status_no_show" },
 };
 
 export default function AdminSchedulePage() {
@@ -181,11 +181,11 @@ export default function AdminSchedulePage() {
       <div className="flex items-center justify-between mb-[32px]">
         <div>
           <h1
-            className="text-[24px] font-bold text-[#1E2438] tracking-tight"
+            className="text-[24px] font-bold text-[#111111] tracking-tight"
           >
             📅 {t.admin_schedule_title}
           </h1>
-          <p className="text-[#1E2438]/60 text-[14px] font-bold mt-[4px]">Caribbean World Djerba — Court de Padel</p>
+          <p className="text-[#888888] text-[14px] font-bold mt-[4px]">Hotel Name — Padel Court</p>
         </div>
         <input
           id="admin-date-picker"
@@ -245,13 +245,13 @@ export default function AdminSchedulePage() {
                       {/* Time */}
                       <td className="px-[24px] py-[20px]">
                         <span
-                          className={`font-bold text-[15px] block ${isPeak ? "text-amber-600" : "text-[#2CAFC2]"}`}
+                          className={`font-bold text-[15px] block ${isPeak ? "text-[#555555]" : "text-[#333333]"}`}
                         >
                           {slotStart} - {getSlotEnd(slotStart, settings?.slot_duration_minutes || 90)}
                         </span>
                         {isPeak && (
-                          <span className="text-[11px] text-amber-600 font-bold tracking-tight">
-                            ⚡ Heure de pointe
+                          <span className="text-[11px] text-[#777777] font-bold tracking-tight">
+                            ⚡ Peak hour
                           </span>
                         )}
                       </td>
@@ -262,31 +262,31 @@ export default function AdminSchedulePage() {
                           <span
                             className="text-[11px] px-[12px] py-[6px] rounded-full font-bold uppercase tracking-wide"
                             style={{
-                              background: isBlock ? "rgba(30,36,56,0.05)" : "rgba(44,175,194,0.1)",
-                              color: isBlock ? "#1E2438" : "#2CAFC2",
-                              border: `1px solid ${isBlock ? "rgba(30,36,56,0.1)" : "rgba(44,175,194,0.2)"}`,
+                              background: isBlock ? "rgba(0,0,0,0.05)" : "rgba(0,0,0,0.07)",
+                              color: isBlock ? "#555555" : "#333333",
+                              border: `1px solid ${isBlock ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,0.12)"}`,
                             }}
                           >
-                            {isBlock ? "🚫 Bloqué" : "👤 Client"}
+                            {isBlock ? "🚫 Blocked" : "👤 Guest"}
                           </span>
                         ) : (
-                          <span className="text-[#1E2438]/40 text-[14px] font-bold">—</span>
+                          <span className="text-[#bbbbbb] text-[14px] font-bold">—</span>
                         )}
                       </td>
 
                       {/* Client name & Add-ons */}
                       <td className="px-[24px] py-[20px]">
                         <div className="flex flex-col gap-[4px]">
-                          <span className="text-[#1E2438] font-bold text-[14px]">
+                          <span className="text-[#111111] font-bold text-[14px]">
                             {booking && !isBlock
                               ? `${booking.customer_first_name} ${booking.customer_last_name}`
                               : "—"}
                           </span>
                           {booking && !isBlock && (
                             <div className="flex items-center gap-[6px]">
-                              {booking.racket_count > 0 && <span className="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">🎾 x{booking.racket_count}</span>}
-                              {booking.bought_balls_only && <span className="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">🎾 Balles</span>}
-                              {booking.needs_lighting && <span className="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">💡 Éclairage</span>}
+                              {booking.racket_count > 0 && <span className="text-[11px] font-bold text-[#666666] bg-[#eeeeee] px-2 py-0.5 rounded-md">🎾 x{booking.racket_count}</span>}
+                              {booking.bought_balls_only && <span className="text-[11px] font-bold text-[#666666] bg-[#eeeeee] px-2 py-0.5 rounded-md">🎾 Balls</span>}
+                              {booking.needs_lighting && <span className="text-[11px] font-bold text-[#666666] bg-[#eeeeee] px-2 py-0.5 rounded-md">💡 Lighting</span>}
                             </div>
                           )}
                         </div>
@@ -301,21 +301,21 @@ export default function AdminSchedulePage() {
                       <td className="px-[24px] py-[20px]">
                         {booking && !isBlock ? (
                           <span
-                            className="font-bold text-[14px] tracking-widest text-violet-600 bg-violet-50 px-[12px] py-[4px] rounded-lg border border-violet-100"
+                            className="font-bold text-[14px] tracking-widest text-[#333333] bg-[#f0f0f0] px-[12px] py-[4px] rounded-lg border border-[#dddddd]"
                           >
                             {booking.booking_pin}
                           </span>
                         ) : (
-                          <span className="text-[#1E2438]/40 font-bold">—</span>
+                          <span className="text-[#cccccc] font-bold">—</span>
                         )}
                       </td>
 
                       {/* Price */}
                       <td className="px-[24px] py-[20px]">
                         {booking && !isBlock ? (
-                          <span className="text-[#1E2438] font-bold text-[14px]">{formatPrice(booking.total_price, booking.currency || settings?.currency)}</span>
+                          <span className="text-[#111111] font-bold text-[14px]">{formatPrice(booking.total_price, booking.currency || settings?.currency)}</span>
                         ) : (
-                          <span className="text-[#1E2438]/40 font-bold">—</span>
+                          <span className="text-[#bbbbbb] font-bold">—</span>
                         )}
                       </td>
 
@@ -323,24 +323,19 @@ export default function AdminSchedulePage() {
                       <td className="px-[24px] py-[20px]">
                         {isBlock ? (
                           <span
-                            className="text-[11px] font-bold px-[12px] py-[6px] rounded-full uppercase tracking-wide bg-[#1E2438]/5 text-[#1E2438]/60 border border-[#1E2438]/10"
+                            className="text-[11px] font-bold px-[12px] py-[6px] rounded-full uppercase tracking-wide bg-[#eeeeee] text-[#777777] border border-[#dddddd]"
                           >
-                            🚫 Bloqué
+                            🚫 Blocked
                           </span>
                         ) : statusInfo ? (
                           <span
-                            className="text-[11px] font-bold px-[12px] py-[6px] rounded-full uppercase tracking-wide"
-                            style={{
-                              background: statusInfo.bg,
-                              color: statusInfo.text,
-                              border: `1px solid ${statusInfo.text}30`,
-                            }}
+                            className="text-[11px] font-bold px-[12px] py-[6px] rounded-full uppercase tracking-wide bg-[#eeeeee] text-[#555555] border border-[#dddddd]"
                           >
                             {/* @ts-expect-error valid dynamic key mapping */}
                             {t[statusInfo.labelKey] ?? statusInfo.labelKey}
                           </span>
                         ) : (
-                          <span className="text-[#1E2438]/40 text-[13px] font-bold">{t.status_free}</span>
+                          <span className="text-[#bbbbbb] text-[13px] font-bold">{t.status_free}</span>
                         )}
                       </td>
 

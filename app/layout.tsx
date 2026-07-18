@@ -22,9 +22,9 @@ const rubik = Rubik({
 });
 
 export const metadata: Metadata = {
-  title: "Padel Court — Caribbean World Djerba",
+  title: "Padel Court Booking — Booking Demo",
   description:
-    "Book your padel court at Caribbean World Djerba. Select a time slot, add equipment, and confirm your reservation in seconds.",
+    "Book your padel court. Select a time slot, add equipment, and confirm your reservation in seconds.",
 };
 
 export default function RootLayout({

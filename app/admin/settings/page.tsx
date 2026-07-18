@@ -48,14 +48,14 @@ const InputField = ({
       step={step}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="w-full px-4 py-3 mt-1 rounded-lg text-slate-200 text-sm outline-none transition-all"
+      className="w-full px-4 py-3 mt-1 rounded-lg text-[#111111] text-sm outline-none transition-all"
       style={{
-        background: "#0f172a",
-        border: "1.5px solid #334155",
+        background: "#f5f5f5",
+        border: "1.5px solid #cccccc",
         fontFamily: "var(--font-body)",
       }}
-      onFocus={(e) => (e.target.style.borderColor = "#14b8a6")}
-      onBlur={(e) => (e.target.style.borderColor = "#334155")}
+      onFocus={(e) => (e.target.style.borderColor = "#555555")}
+      onBlur={(e) => (e.target.style.borderColor = "#cccccc")}
     />
   </div>
 );
@@ -144,7 +144,7 @@ export default function AdminSettingsPage() {
         </div>
         <div
           className="rounded-2xl p-8 flex flex-col items-center justify-center text-center gap-5"
-          style={{ background: "#1e293b", border: "1px solid #334155" }}
+          style={{ background: "#ffffff", border: "1px solid #e0e0e0" }}
         >
           <div
             className="w-16 h-16 rounded-2xl flex items-center justify-center"
@@ -153,9 +153,9 @@ export default function AdminSettingsPage() {
             <ShieldAlert size={32} className="text-red-400" strokeWidth={1.5} />
           </div>
           <div>
-            <p className="text-white font-bold text-lg">Accès refusé</p>
-            <p className="text-slate-400 text-sm mt-2 max-w-xs">
-              La modification des paramètres est réservée aux administrateurs. Contactez votre responsable pour obtenir un accès.
+            <p className="text-[#111111] font-bold text-lg">Access Denied</p>
+            <p className="text-[#666666] text-sm mt-2 max-w-xs">
+              Settings changes are reserved for administrators. Contact your manager for access.
             </p>
           </div>
         </div>
@@ -166,8 +166,8 @@ export default function AdminSettingsPage() {
   // ── Loading ────────────────────────────────────────────────────────────────
   if (!settings) {
     return (
-      <div className="p-8 flex items-center justify-center text-slate-400">
-        Chargement...
+      <div className="p-8 flex items-center justify-center text-[#888888]">
+        Loading...
       </div>
     );
   }
@@ -201,9 +201,9 @@ export default function AdminSettingsPage() {
         {/* Pricing Section */}
         <div
           className="rounded-2xl p-[24px] md:p-[32px] space-y-[16px]"
-          style={{ background: "#1e293b", border: "1px solid #334155" }}
+          style={{ background: "#ffffff", border: "1px solid #e0e0e0" }}
         >
-          <h2 className="font-semibold text-white text-sm uppercase tracking-wider">
+          <h2 className="font-semibold text-[#333333] text-sm uppercase tracking-wider">
             💰 Tarifs
           </h2>
           <div className="grid grid-cols-2 gap-[16px]">
@@ -335,10 +335,10 @@ export default function AdminSettingsPage() {
               value={peakSlotsInput}
               onChange={(e) => setPeakSlotsInput(e.target.value)}
               placeholder='Ex: 17:00, 18:30, 20:00'
-              className="w-full px-[16px] py-[12px] mt-[4px] rounded-lg text-slate-200 text-sm outline-none transition-all"
+              className="w-full px-[16px] py-[12px] mt-[4px] rounded-lg text-[#111111] text-sm outline-none transition-all"
               style={{
-                background: "#0f172a",
-                border: "1.5px solid #334155",
+                background: "#f5f5f5",
+                border: "1.5px solid #cccccc",
                 fontFamily: "var(--font-mono, monospace)",
               }}
               onBlur={(e) => (e.target.style.borderColor = "#334155")}
@@ -360,13 +360,11 @@ export default function AdminSettingsPage() {
           disabled={saving}
           className="w-full py-[12px] rounded-xl font-bold text-white transition-all"
           style={{
-            background: saving
-              ? "#334155"
-              : "linear-gradient(135deg, #0891b2, #14b8a6)",
-            boxShadow: saving ? "none" : "0 4px 16px rgba(8,145,178,0.3)",
+            background: saving ? "#cccccc" : "#111111",
+            boxShadow: saving ? "none" : "0 2px 8px rgba(0,0,0,0.2)",
           }}
         >
-          {saving ? "Sauvegarde..." : "💾 Sauvegarder les paramètres"}
+          {saving ? "Saving..." : "💾 Save settings"}
         </button>
       </div>
     </div>

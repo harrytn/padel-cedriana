@@ -1,16 +1,11 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand colours */
-  --color-page-bg: #FFF3D6;
-  --color-card-bg: #FAFAF7;
-  --color-navy: #1E2438;
-  --color-toucan-red: #E41E2D;
-  --color-charcoal: #2B2D42;
-  --color-palm-green: #98C28F;
-  --color-toucan-blue: #2CAFC2;
-  --color-sunset-orange: #DB8248;
-  --color-tropical-yellow: #EEBB3B;
+  /* Neutral demo palette — black, white, grey only */
+  --color-page-bg: #f5f5f5;
+  --color-card-bg: #ffffff;
+  --color-navy: #111111;
+  --color-charcoal: #333333;
 
   /* Border radii */
   --radius-DEFAULT: 1rem;
@@ -29,16 +24,16 @@
 
 
 :root {
-  --bg-sand: #FAFAF8;
-  --text-charcoal: #1A1A1A;
-  --primary-green: #1B4332;
-  --hover-green: #2D6A4F;
-  --highlight-coral: #F28482;
-  --highlight-yellow: #F4A261;
+  --bg-sand: #f5f5f5;
+  --text-charcoal: #1a1a1a;
+  --primary-green: #222222;
+  --hover-green: #444444;
+  --highlight-coral: #888888;
+  --highlight-yellow: #aaaaaa;
   --font-body: var(--font-inter), "Inter", sans-serif;
-  --btn-interactive: #bbf7d0;
-  --btn-interactive-hover: #86efac;
-  --slot-booked-bg: #ffbfbf;
+  --btn-interactive: #e5e5e5;
+  --btn-interactive-hover: #d0d0d0;
+  --slot-booked-bg: #e0e0e0;
   --slot-booked-text: rgba(26, 26, 26, 0.4);
 }
 
@@ -50,20 +45,11 @@
 
 body {
   font-family: var(--font-body);
-  background: var(--bg-sand) url('/bg_pattern.jpg') no-repeat center center;
-  background-size: cover;
-  background-attachment: fixed;
+  background: #f5f5f5;
   color: var(--text-charcoal);
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-}
-
-/* Mobile fallback: bg-fixed doesn't work on iOS, use scroll instead */
-@supports (-webkit-touch-callout: none) {
-  body {
-    background-attachment: scroll;
-  }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -74,9 +60,9 @@ h1, h2, h3, h4, h5, h6 {
 /* Minimalist Card */
 .flat-card {
   background: white;
-  border: 1px solid rgba(27, 67, 50, 0.1);
+  border: 1px solid #e0e0e0;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(27, 67, 50, 0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 /* Slot button styles */
@@ -84,43 +70,43 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   padding: 0.75rem 0.875rem;
   text-align: left;
-  border: 1px solid rgba(27, 67, 50, 0.12);
+  border: 1px solid #d0d0d0;
   border-radius: 10px;
   transition: all 0.2s ease;
-  background: var(--btn-interactive);
-  color: var(--primary-green);
+  background: #f0f0f0;
+  color: #1a1a1a;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .ready-to-book:hover {
-  background: var(--btn-interactive-hover);
+  background: #e0e0e0;
   transform: translateY(-1px);
 }
 
 .slot-selected {
-  background: var(--primary-green) !important;
+  background: #222222 !important;
   color: white !important;
-  border-color: var(--primary-green) !important;
+  border-color: #222222 !important;
 }
 
 .slot-booked {
-  background: var(--slot-booked-bg) !important;
-  border-color: rgba(26, 26, 26, 0.05) !important;
-  color: var(--slot-booked-text) !important;
+  background: #e0e0e0 !important;
+  border-color: #cccccc !important;
+  color: rgba(26, 26, 26, 0.5) !important;
   cursor: not-allowed;
 }
 
 .slot-past {
   background: rgba(0, 0, 0, 0.05) !important;
   border-color: transparent !important;
-  color: rgba(43, 45, 66, 0.5) !important;
+  color: rgba(0, 0, 0, 0.35) !important;
   cursor: not-allowed;
   opacity: 0.8;
 }
 
 .slot-peak-badge {
-  background: var(--highlight-yellow);
-  color: var(--primary-green);
+  background: #d0d0d0;
+  color: #333333;
   font-size: 0.65rem;
   padding: 2px 6px;
   border-radius: 4px;
@@ -131,23 +117,23 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Custom buttons */
 .btn-primary {
-  background: var(--btn-interactive);
-  color: var(--text-charcoal);
+  background: #e5e5e5;
+  color: #1a1a1a;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-weight: 600;
   transition: background 0.2s ease;
-  border: 1px solid rgba(26, 26, 26, 0.1);
+  border: 1px solid #cccccc;
 }
 
 .btn-primary:hover {
-  background: var(--btn-interactive-hover);
+  background: #d0d0d0;
 }
 
 .btn-secondary {
   background: white;
-  color: var(--primary-green);
-  border: 1px solid var(--primary-green);
+  color: #222222;
+  border: 1px solid #aaaaaa;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-weight: 500;
@@ -157,16 +143,16 @@ h1, h2, h3, h4, h5, h6 {
 .minimal-input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid rgba(27, 67, 50, 0.2);
+  border: 1px solid #cccccc;
   border-radius: 8px;
-  background: #FCFBF8;
+  background: #ffffff;
   outline: none;
   font-size: 0.875rem;
 }
 
 .minimal-input:focus {
-  border-color: var(--primary-green);
-  box-shadow: 0 0 0 2px rgba(27, 67, 50, 0.05);
+  border-color: #555555;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.06);
 }
 
 /* Modal */
@@ -184,7 +170,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 3.5rem;
   font-weight: 700;
   letter-spacing: 0.2em;
-  color: var(--primary-green);
+  color: #111111;
   text-align: center;
   padding: 1rem 0;
 }
@@ -194,16 +180,15 @@ h1, h2, h3, h4, h5, h6 {
   width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-sand);
+  background: #f0f0f0;
 }
 ::-webkit-scrollbar-thumb {
-  background: #d1d5db;
+  background: #bbbbbb;
   border-radius: 2px;
 }
 
 /* ─────────────────────────────
-   Caribbean World UI System
-   Global spacing + glass standards
+   Demo UI System — Neutral Spacing
 
    CRITICAL PROJECT RULE:
    - Tailwind spacing utilities (e.g. p-6, gap-4, mt-8) are unreliable in this project.
@@ -215,41 +200,38 @@ h1, h2, h3, h4, h5, h6 {
 .cw-glass-panel {
   position: relative !important;
   box-sizing: border-box !important;
-  border-radius: 30px !important;
+  border-radius: 16px !important;
   padding: 36px 40px !important;
-  background: rgba(255, 255, 255, 0.58) !important;
-  backdrop-filter: blur(8px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.42) !important;
-  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.14) !important;
+  background: #ffffff !important;
+  border: 1px solid #e0e0e0 !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
 }
 
 .cw-glass-card {
   position: relative !important;
   box-sizing: border-box !important;
-  border-radius: 24px !important;
+  border-radius: 12px !important;
   padding: 28px 32px !important;
-  background: rgba(255, 255, 255, 0.62) !important;
-  backdrop-filter: blur(6px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.38) !important;
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.10) !important;
+  background: #f8f8f8 !important;
+  border: 1px solid #e0e0e0 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
 }
 
 .cw-confirmation-card {
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
-  border-radius: 32px;
+  border-radius: 16px;
   padding: 36px 40px;
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.48);
-  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.18);
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
 }
 
 .cw-confirmation-section {
   box-sizing: border-box;
   padding: 20px 24px;
-  border-radius: 24px;
+  border-radius: 12px;
   overflow-wrap: anywhere;
   word-break: normal;
 }
@@ -258,7 +240,7 @@ h1, h2, h3, h4, h5, h6 {
   box-sizing: border-box;
   width: 100%;
   padding: 20px 24px;
-  border-radius: 24px;
+  border-radius: 12px;
   overflow-wrap: break-word;
   line-height: 1.55;
 }
@@ -267,7 +249,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative !important;
   box-sizing: border-box !important;
   overflow: hidden !important;
-  border-radius: 24px !important;
+  border-radius: 12px !important;
   min-height: 128px !important;
   padding: 28px 32px !important;
 }
@@ -276,19 +258,18 @@ h1, h2, h3, h4, h5, h6 {
   position: relative !important;
   box-sizing: border-box !important;
   width: 280px !important;
-  border-radius: 30px !important;
+  border-radius: 16px !important;
   padding: 28px 24px !important;
-  background: rgba(255, 255, 255, 0.58) !important;
-  backdrop-filter: blur(8px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.42) !important;
-  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.12) !important;
+  background: #ffffff !important;
+  border: 1px solid #e0e0e0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
 }
 
 .cw-nav-item {
   box-sizing: border-box !important;
   min-height: 56px !important;
   padding: 0 20px !important;
-  border-radius: 20px !important;
+  border-radius: 10px !important;
   display: flex !important;
   align-items: center !important;
   gap: 12px !important;
@@ -309,28 +290,27 @@ h1, h2, h3, h4, h5, h6 {
 .cw-form-card {
   position: relative !important;
   box-sizing: border-box !important;
-  border-radius: 28px !important;
+  border-radius: 16px !important;
   padding: 32px !important;
-  background: rgba(255, 255, 255, 0.62) !important;
-  backdrop-filter: blur(8px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.42) !important;
-  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.14) !important;
+  background: #ffffff !important;
+  border: 1px solid #e0e0e0 !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
 }
 
 .cw-input {
   box-sizing: border-box !important;
   min-height: 48px !important;
   padding: 12px 16px !important;
-  border-radius: 16px !important;
-  background: rgba(255, 255, 255, 0.78) !important;
-  border: 1px solid rgba(103, 232, 249, 0.45) !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  border: 1px solid #cccccc !important;
 }
 
 .cw-button {
   box-sizing: border-box !important;
   min-height: 48px !important;
   padding: 0 20px !important;
-  border-radius: 16px !important;
+  border-radius: 8px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -341,23 +321,21 @@ h1, h2, h3, h4, h5, h6 {
 .cw-modal-root {
   position: relative !important;
   box-sizing: border-box !important;
-  border-radius: 32px !important;
+  border-radius: 16px !important;
   padding: 36px !important;
-  background: rgba(255, 255, 255, 0.72) !important;
-  backdrop-filter: blur(10px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.48) !important;
-  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.22) !important;
+  background: #ffffff !important;
+  border: 1px solid #e0e0e0 !important;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.14) !important;
 }
 
 .cw-admin-card {
   position: relative !important;
   box-sizing: border-box !important;
-  border-radius: 24px !important;
+  border-radius: 12px !important;
   padding: 28px 32px !important;
-  background: rgba(255, 255, 255, 0.64) !important;
-  backdrop-filter: blur(8px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.42) !important;
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.10) !important;
+  background: #f8f8f8 !important;
+  border: 1px solid #e0e0e0 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
 }
 
 /* ─────────────────────────────

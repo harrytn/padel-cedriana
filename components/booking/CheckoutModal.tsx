@@ -140,11 +140,11 @@ export default function CheckoutModal({
     return (
       <div
         className={`flex justify-between items-center text-[13px] ${
-          highlight ? "font-bold text-[#1B4332]" : "text-[#1A1A1A]/60"
+          highlight ? "font-bold text-[#111111]" : "text-[#555555]"
         }`}
       >
         <span>{label}</span>
-        <span className={highlight ? "text-[#1B4332]" : "text-[#1A1A1A]/80"}>
+        <span className={highlight ? "text-[#111111]" : "text-[#333333]"}>
           +{formatPrice(amount, settings.currency)}
         </span>
       </div>
@@ -152,14 +152,14 @@ export default function CheckoutModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-[#1B4332]/20 backdrop-blur-sm z-50 flex items-center justify-center p-[16px]" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-[16px]" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="cw-modal-root w-full max-w-[500px] max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex justify-between items-start mb-[32px]">
           <div>
-            <h2 className="text-xl font-bold text-[#1B4332] tracking-tight">{t.checkout_title}</h2>
+            <h2 className="text-xl font-bold text-[#111111] tracking-tight">{t.checkout_title}</h2>
             <div className="flex items-center gap-[8px] mt-[8px]">
-              <span className="text-sm font-medium text-[#1A1A1A]/60">{t.checkout_selected_slot}: {slot.slotStart}</span>
+              <span className="text-sm font-medium text-[#666666]">{t.checkout_selected_slot}: {slot.slotStart}</span>
               {slot.isPeak && (
                 <span className="slot-peak-badge">⚡ +{formatPrice(settings.peak_premium, settings.currency)} {t.book_peak_badge}</span>
               )}
@@ -167,7 +167,7 @@ export default function CheckoutModal({
           </div>
           <button
             onClick={onClose}
-            className="p-[8px] hover:bg-[#1B4332]/5 rounded-full transition-colors text-[#1A1A1A]/40"
+            className="p-[8px] hover:bg-[#f0f0f0] rounded-full transition-colors text-[#888888]"
           >
             <X size={20} strokeWidth={1.5} />
           </button>
@@ -212,7 +212,7 @@ export default function CheckoutModal({
 
           {/* Rackets Add-on */}
           <div className="cw-glass-card flex flex-col gap-[16px] p-[24px]">
-            <div className="flex items-center gap-[8px] text-[#1B4332]">
+            <div className="flex items-center gap-[8px] text-[#333333]">
               <ShoppingBag size={16} strokeWidth={1.5} />
               <p className="text-sm font-bold tracking-tight">{t.checkout_rackets_label}</p>
             </div>
@@ -223,8 +223,8 @@ export default function CheckoutModal({
                   onClick={() => setRacketCount(n)}
                   className={`w-9 h-9 rounded-full text-sm font-bold transition-all border ${
                     racketCount === n
-                      ? "bg-[#1B4332] border-[#1B4332] text-white"
-                      : "bg-white border-[#1B4332]/10 text-[#1B4332]/60 hover:border-[#1B4332]/40"
+                      ? "bg-[#111111] border-[#111111] text-white"
+                      : "bg-white border-[#cccccc] text-[#555555] hover:border-[#888888]"
                   }`}
                 >
                   {n}
@@ -233,11 +233,11 @@ export default function CheckoutModal({
             </div>
 
             {racketCount === 0 && (
-              <div className="flex items-center justify-between pt-4 border-t border-[#1B4332]/5">
-                <span className="text-[13px] font-bold text-[#1B4332]/80">{t.checkout_balls_only_label}</span>
+              <div className="flex items-center justify-between pt-4 border-t border-[#e0e0e0]">
+                <span className="text-[13px] font-bold text-[#333333]">{t.checkout_balls_only_label}</span>
                 <button 
                   onClick={() => setBallsOnly(!ballsOnly)}
-                  className={`w-10 h-5 rounded-full relative transition-colors ${ballsOnly ? 'bg-[#1B4332]' : 'bg-[#1B4332]/10'}`}
+                  className={`w-10 h-5 rounded-full relative transition-colors ${ballsOnly ? 'bg-[#333333]' : 'bg-[#d0d0d0]'}`}
                 >
                   <div className={`absolute top-1 w-3 h-3 rounded-full bg-white transition-all ${ballsOnly ? 'left-6' : 'left-1'}`} />
                 </button>
@@ -248,13 +248,13 @@ export default function CheckoutModal({
           {/* Lighting Add-on */}
           {slot.hasLighting && (
             <div className="cw-glass-card p-[24px] flex items-center justify-between">
-              <div className="flex items-center gap-[8px] text-[#1B4332]">
+              <div className="flex items-center gap-[8px] text-[#333333]">
                 <Lightbulb size={16} strokeWidth={1.5} />
                 <p className="text-sm font-bold tracking-tight">{t.checkout_lighting_label}</p>
               </div>
               <button 
                 onClick={() => setNeedsLighting(!needsLighting)}
-                className={`w-10 h-5 rounded-full relative transition-colors ${needsLighting ? 'bg-[#1B4332]' : 'bg-[#1B4332]/10'}`}
+                className={`w-10 h-5 rounded-full relative transition-colors ${needsLighting ? 'bg-[#333333]' : 'bg-[#d0d0d0]'}`}
               >
                 <div className={`absolute top-1 w-3 h-3 rounded-full bg-white transition-all ${needsLighting ? 'left-6' : 'left-1'}`} />
               </button>
@@ -262,32 +262,32 @@ export default function CheckoutModal({
           )}
 
           {/* Price Breakdown */}
-          <div className="bg-[#1B4332]/5 rounded-xl p-[24px] flex flex-col gap-[12px]">
+          <div className="bg-[#f5f5f5] rounded-xl p-[24px] flex flex-col gap-[12px]">
             <PriceRow label={t.checkout_base.replace("{count}", slot.durationMinutes.toString())} amount={breakdown.base} />
             <PriceRow label={t.checkout_peak_surcharge} amount={breakdown.peakSurcharge} />
             <PriceRow label={t.checkout_rackets_fee} amount={breakdown.rackets} />
             <PriceRow label={t.checkout_balls_fee} amount={breakdown.ballsOnly} />
             <PriceRow label={t.checkout_lighting_fee} amount={breakdown.lighting} />
             
-            <div className="flex justify-between items-center pt-3 border-t border-[#1B4332]/10">
-              <span className="text-sm font-bold text-[#1B4332]">{t.checkout_total}</span>
-              <span className="text-xl font-bold text-[#1B4332]">{formatPrice(breakdown.total, settings.currency)}</span>
+            <div className="flex justify-between items-center pt-3 border-t border-[#dddddd]">
+              <span className="text-sm font-bold text-[#111111]">{t.checkout_total}</span>
+              <span className="text-xl font-bold text-[#111111]">{formatPrice(breakdown.total, settings.currency)}</span>
             </div>
           </div>
 
           {/* Error */}
           {error && (
-            <p className="text-xs font-semibold text-[#F28482] text-center">{error}</p>
+            <p className="text-xs font-semibold text-[#666666] text-center">{error}</p>
           )}
 
           {/* Actions */}
           <button
             onClick={handleSubmit}
             disabled={isSubmitting}
-            className="cw-button w-full bg-[#E41E2D] text-white font-bold text-[15px] tracking-tight transition-opacity hover:opacity-90 disabled:opacity-50 mt-[8px]"
+            className="cw-button w-full bg-[#111111] text-white font-bold text-[15px] tracking-tight transition-opacity hover:opacity-80 disabled:opacity-40 mt-[8px]"
           >
             {isSubmitting ? (
-              <span className="w-4 h-4 border-2 border-[#1A1A1A]/20 border-t-[#1A1A1A] rounded-full animate-spin" />
+              <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               <>
                 <span className="tracking-tight">{t.checkout_confirm_btn}</span>

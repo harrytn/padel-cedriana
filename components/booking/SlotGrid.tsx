@@ -39,7 +39,7 @@ export default function SlotGrid({
           <div
             key={i}
             className="flat-card h-24 animate-pulse"
-            style={{ background: "rgba(27, 67, 50, 0.02)" }}
+            style={{ background: "#eeeeee" }}
           />
         ))}
       </div>
@@ -48,11 +48,11 @@ export default function SlotGrid({
 
   if (error) {
     return (
-      <div className="text-center py-12 bg-[#F28482]/5 rounded-xl border border-dashed border-[#F28482]/20">
+      <div className="text-center py-12 bg-[#f5f5f5] rounded-xl border border-dashed border-[#cccccc]">
         <div className="flex justify-center mb-4">
-          <AlertCircle size={48} strokeWidth={1} className="text-[#F28482] opacity-40" />
+          <AlertCircle size={48} strokeWidth={1} className="text-[#aaaaaa]" />
         </div>
-        <p className="text-sm font-bold text-[#F28482] opacity-80 tracking-tight">
+        <p className="text-sm font-bold text-[#888888] tracking-tight">
           {error}
         </p>
       </div>
@@ -61,11 +61,11 @@ export default function SlotGrid({
 
   if (!slots.length) {
     return (
-      <div className="text-center py-12 bg-white/40 rounded-xl border border-dashed border-[#1B4332]/20">
+      <div className="text-center py-12 bg-[#f8f8f8] rounded-xl border border-dashed border-[#d0d0d0]">
         <div className="flex justify-center mb-4">
-          <Calendar size={48} strokeWidth={1} className="text-[#1B4332] opacity-20" />
+          <Calendar size={48} strokeWidth={1} className="text-[#bbbbbb]" />
         </div>
-        <p className="text-sm font-medium text-[#1B4332] opacity-60 tracking-tight">
+        <p className="text-sm font-medium text-[#999999] tracking-tight">
           {t.book_select_date}
         </p>
       </div>
