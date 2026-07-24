@@ -38,7 +38,7 @@ const InputField = ({
   <div>
     <label
       htmlFor={id}
-      className="block text-sm font-medium text-slate-400"
+      className="block text-sm font-medium theme-text-muted"
     >
       {label}
     </label>
@@ -48,14 +48,8 @@ const InputField = ({
       step={step}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="w-full px-4 py-3 mt-1 rounded-lg text-[#111111] text-sm outline-none transition-all"
-      style={{
-        background: "#f5f5f5",
-        border: "1.5px solid #cccccc",
-        fontFamily: "var(--font-body)",
-      }}
-      onFocus={(e) => (e.target.style.borderColor = "#555555")}
-      onBlur={(e) => (e.target.style.borderColor = "#cccccc")}
+      className="cw-input w-full mt-1 text-sm"
+      style={{ fontFamily: "var(--font-body)" }}
     />
   </div>
 );
@@ -135,26 +129,29 @@ export default function AdminSettingsPage() {
     return (
       <div className="max-w-2xl">
         <div className="mb-8">
-          <h1
-            className="text-2xl font-bold text-white"
-            style={{ fontFamily: "var(--font-outfit)" }}
-          >
+          <h1 className="text-2xl font-bold theme-text-strong">
             ⚙️ {t.admin_settings_title}
           </h1>
         </div>
         <div
           className="rounded-2xl p-8 flex flex-col items-center justify-center text-center gap-5"
-          style={{ background: "#ffffff", border: "1px solid #e0e0e0" }}
+          style={{
+            background: "var(--brand-surface)",
+            border: "1px solid var(--brand-border)",
+          }}
         >
           <div
             className="w-16 h-16 rounded-2xl flex items-center justify-center"
-            style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)" }}
+            style={{
+              background: "var(--state-error-soft)",
+              border: "1px solid var(--state-error-soft)",
+            }}
           >
-            <ShieldAlert size={32} className="text-red-400" strokeWidth={1.5} />
+            <ShieldAlert size={32} strokeWidth={1.5} style={{ color: "var(--state-error)" }} />
           </div>
           <div>
-            <p className="text-[#111111] font-bold text-lg">Access Denied</p>
-            <p className="text-[#666666] text-sm mt-2 max-w-xs">
+            <p className="font-bold text-lg theme-text-strong">Access Denied</p>
+            <p className="text-sm mt-2 max-w-xs theme-text-muted">
               Settings changes are reserved for administrators. Contact your manager for access.
             </p>
           </div>
@@ -166,7 +163,7 @@ export default function AdminSettingsPage() {
   // ── Loading ────────────────────────────────────────────────────────────────
   if (!settings) {
     return (
-      <div className="p-8 flex items-center justify-center text-[#888888]">
+      <div className="p-8 flex items-center justify-center theme-text-muted">
         Loading...
       </div>
     );
@@ -178,21 +175,22 @@ export default function AdminSettingsPage() {
       {/* Toast */}
       {toast && (
         <div
-          className="fixed top-4 right-4 px-5 py-3 rounded-xl text-white font-medium text-sm z-50 shadow-lg"
-          style={{ background: "#1e293b", border: "1px solid #334155" }}
+          className="fixed top-4 right-4 px-5 py-3 rounded-xl font-medium text-sm z-50"
+          style={{
+            background: "var(--brand-primary)",
+            color: "var(--brand-on-primary)",
+            boxShadow: "var(--shadow-panel)",
+          }}
         >
           {toast}
         </div>
       )}
 
       <div className="mb-[32px]">
-        <h1
-          className="text-2xl font-bold text-white"
-          style={{ fontFamily: "var(--font-outfit)" }}
-        >
+        <h1 className="text-2xl font-bold theme-text-strong">
           ⚙️ {t.admin_settings_title}
         </h1>
-        <p className="text-slate-400 mt-[4px] text-sm">
+        <p className="theme-text-muted mt-[4px] text-sm">
           Mises à jour appliquées immédiatement aux nouvelles réservations.
         </p>
       </div>
@@ -201,9 +199,12 @@ export default function AdminSettingsPage() {
         {/* Pricing Section */}
         <div
           className="rounded-2xl p-[24px] md:p-[32px] space-y-[16px]"
-          style={{ background: "#ffffff", border: "1px solid #e0e0e0" }}
+          style={{
+            background: "var(--brand-surface)",
+            border: "1px solid var(--brand-border)",
+          }}
         >
-          <h2 className="font-semibold text-[#333333] text-sm uppercase tracking-wider">
+          <h2 className="font-semibold text-sm uppercase tracking-wider theme-text-strong">
             💰 Tarifs
           </h2>
           <div className="grid grid-cols-2 gap-[16px]">
@@ -243,19 +244,15 @@ export default function AdminSettingsPage() {
               {...field("lighting_price")}
             />
             <div>
-              <label htmlFor="currency" className="block text-sm font-medium text-slate-400">
+              <label htmlFor="currency" className="block text-sm font-medium theme-text-muted">
                 {t.admin_settings_currency}
               </label>
               <select
                 id="currency"
                 value={form.currency || "TND"}
                 onChange={(e) => setForm(prev => ({ ...prev, currency: e.target.value }))}
-                className="w-full px-4 py-3 mt-1 rounded-lg text-slate-200 text-sm outline-none transition-all"
-                style={{
-                  background: "#0f172a",
-                  border: "1.5px solid #334155",
-                  fontFamily: "var(--font-body)",
-                }}
+                className="cw-input w-full mt-1 text-sm"
+                style={{ fontFamily: "var(--font-body)" }}
               >
                 <option value="TND">{t.admin_settings_currency_tnd}</option>
                 <option value="EUR">{t.admin_settings_currency_eur}</option>
@@ -267,9 +264,12 @@ export default function AdminSettingsPage() {
         {/* Schedule Section */}
         <div
           className="rounded-2xl p-[24px] md:p-[32px] space-y-[16px]"
-          style={{ background: "#1e293b", border: "1px solid #334155" }}
+          style={{
+            background: "var(--brand-surface)",
+            border: "1px solid var(--brand-border)",
+          }}
         >
-          <h2 className="font-semibold text-white text-sm uppercase tracking-wider">
+          <h2 className="font-semibold text-sm uppercase tracking-wider theme-text-strong">
             🕐 Horaires
           </h2>
           <div className="grid grid-cols-3 gap-[16px]">
@@ -291,19 +291,15 @@ export default function AdminSettingsPage() {
               {...field("lighting_trigger_hour")}
             />
             <div>
-              <label htmlFor="slot-duration" className="block text-sm font-medium text-slate-400">
+              <label htmlFor="slot-duration" className="block text-sm font-medium theme-text-muted">
                 {t.admin_settings_duration}
               </label>
               <select
                 id="slot-duration"
                 value={form.slot_duration_minutes || 90}
                 onChange={(e) => setForm(prev => ({ ...prev, slot_duration_minutes: Number(e.target.value) }))}
-                className="w-full px-4 py-3 mt-1 rounded-lg text-slate-200 text-sm outline-none transition-all"
-                style={{
-                  background: "#0f172a",
-                  border: "1.5px solid #334155",
-                  fontFamily: "var(--font-body)",
-                }}
+                className="cw-input w-full mt-1 text-sm"
+                style={{ fontFamily: "var(--font-body)" }}
               >
                 <option value={20}>20 min</option>
                 <option value={30}>30 min</option>
@@ -317,15 +313,18 @@ export default function AdminSettingsPage() {
         {/* Peak Slots Section */}
         <div
           className="rounded-2xl p-[24px] md:p-[32px] space-y-[16px]"
-          style={{ background: "#1e293b", border: "1px solid #334155" }}
+          style={{
+            background: "var(--brand-surface)",
+            border: "1px solid var(--brand-border)",
+          }}
         >
-          <h2 className="font-semibold text-white text-sm uppercase tracking-wider">
+          <h2 className="font-semibold text-sm uppercase tracking-wider theme-text-strong">
             ⚡ Créneaux de pointe
           </h2>
           <div>
             <label
               htmlFor="peak-slots"
-              className="block text-sm font-medium text-slate-400"
+              className="block text-sm font-medium theme-text-muted"
             >
               Créneaux (HH:mm séparés par des virgules)
             </label>
@@ -334,16 +333,11 @@ export default function AdminSettingsPage() {
               type="text"
               value={peakSlotsInput}
               onChange={(e) => setPeakSlotsInput(e.target.value)}
-              placeholder='Ex: 17:00, 18:30, 20:00'
-              className="w-full px-[16px] py-[12px] mt-[4px] rounded-lg text-[#111111] text-sm outline-none transition-all"
-              style={{
-                background: "#f5f5f5",
-                border: "1.5px solid #cccccc",
-                fontFamily: "var(--font-mono, monospace)",
-              }}
-              onBlur={(e) => (e.target.style.borderColor = "#334155")}
+              placeholder="Ex: 17:00, 18:30, 20:00"
+              className="cw-input w-full mt-[4px] text-sm"
+              style={{ fontFamily: "var(--font-mono, monospace)" }}
             />
-            <p className="text-xs text-slate-500 mt-1.5">
+            <p className="text-xs mt-1.5 theme-text-meta">
               Créneaux valides: {generateTimeSlots(
                 normalizeHour(form?.open_hour ?? "08:00"),
                 normalizeHour(form?.close_hour ?? "22:00"),
@@ -358,10 +352,11 @@ export default function AdminSettingsPage() {
           id="save-settings-btn"
           onClick={handleSave}
           disabled={saving}
-          className="w-full py-[12px] rounded-xl font-bold text-white transition-all"
+          className="cw-button w-full font-bold transition-opacity"
           style={{
-            background: saving ? "#cccccc" : "#111111",
-            boxShadow: saving ? "none" : "0 2px 8px rgba(0,0,0,0.2)",
+            background: saving ? "var(--brand-border)" : "var(--brand-accent)",
+            color: saving ? "var(--brand-text-muted)" : "var(--brand-on-accent)",
+            boxShadow: saving ? "none" : "var(--shadow-button)",
           }}
         >
           {saving ? "Saving..." : "💾 Save settings"}

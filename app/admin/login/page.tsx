@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ShieldCheck, UserRound, Eye, EyeOff } from "lucide-react";
+import { ACTIVE_THEME } from "@/lib/theme";
+import HotelLogo from "@/components/ui/HotelLogo";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -37,46 +39,49 @@ export default function AdminLoginPage() {
   return (
     <div
       className="min-h-screen flex items-center justify-center px-[16px]"
-      style={{ background: "#f5f5f5" }}
+      style={{ background: "var(--brand-bg)" }}
     >
 
       <div className="w-full max-w-sm relative">
         {/* Header */}
         <div className="text-center mb-[32px]">
-          <div className="inline-flex items-center justify-center w-[64px] h-[64px] rounded-2xl mb-[16px]"
-            style={{ background: "#e8e8e8", border: "1px solid #d0d0d0" }}
-          >
-            <span className="text-2xl">🎾</span>
+          <div className="flex justify-center mb-[16px]">
+            <HotelLogo size="mobile" />
           </div>
           <h1
-            className="text-2xl font-bold text-[#111111]"
-            style={{ fontFamily: "var(--font-outfit)" }}
+            className="text-2xl font-bold theme-text-strong"
           >
-            Hotel Name
+            {ACTIVE_THEME.name}
           </h1>
-          <p className="text-[#888888] mt-1 text-sm">Staff Portal</p>
+          <p className="theme-text-muted mt-1 text-sm">Staff Portal</p>
         </div>
 
         {/* Role info cards */}
         <div className="grid grid-cols-2 gap-[12px] mb-[24px]">
           <div
             className="rounded-xl px-[12px] py-[12px] flex items-center gap-[10px]"
-            style={{ background: "#f0f0f0", border: "1px solid #d0d0d0" }}
+            style={{
+              background: "var(--brand-surface-neutral)",
+              border: "1px solid var(--brand-border)",
+            }}
           >
-            <ShieldCheck size={16} className="text-[#555555] shrink-0" />
+            <ShieldCheck size={16} className="shrink-0" style={{ color: "var(--brand-secondary)" }} />
             <div>
-              <p className="text-[#333333] text-xs font-bold">Admin</p>
-              <p className="text-[#999999] text-[10px] leading-tight">Full access</p>
+              <p className="text-xs font-bold theme-text-strong">Admin</p>
+              <p className="text-[10px] leading-tight theme-text-meta">Full access</p>
             </div>
           </div>
           <div
             className="rounded-xl px-[12px] py-[12px] flex items-center gap-[10px]"
-            style={{ background: "#f0f0f0", border: "1px solid #d0d0d0" }}
+            style={{
+              background: "var(--brand-surface-neutral)",
+              border: "1px solid var(--brand-border)",
+            }}
           >
-            <UserRound size={16} className="text-[#555555] shrink-0" />
+            <UserRound size={16} className="shrink-0" style={{ color: "var(--brand-secondary)" }} />
             <div>
-              <p className="text-[#333333] text-xs font-bold">Reception</p>
-              <p className="text-[#999999] text-[10px] leading-tight">Schedule + statuses</p>
+              <p className="text-xs font-bold theme-text-strong">Reception</p>
+              <p className="text-[10px] leading-tight theme-text-meta">Schedule + statuses</p>
             </div>
           </div>
         </div>
@@ -84,9 +89,12 @@ export default function AdminLoginPage() {
         {/* Login Card */}
         <div
           className="rounded-2xl p-[24px]"
-          style={{ background: "#ffffff", border: "1px solid #e0e0e0" }}
+          style={{
+            background: "var(--brand-surface)",
+            border: "1px solid var(--brand-border)",
+          }}
         >
-          <p className="text-[#888888] text-xs text-center mb-[20px]">
+          <p className="text-xs text-center mb-[20px] theme-text-muted">
             Your role is detected automatically from your password.
           </p>
 
@@ -94,7 +102,7 @@ export default function AdminLoginPage() {
             <div>
               <label
                 htmlFor="admin-password"
-                className="block text-sm font-medium text-[#333333] mb-1"
+                className="block text-sm font-medium mb-1 theme-text"
               >
                 Password
               </label>
@@ -106,20 +114,16 @@ export default function AdminLoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="w-full px-[16px] py-[12px] pr-[44px] rounded-xl text-[#111111] placeholder-[#aaaaaa] outline-none transition-all"
-                  style={{
-                    background: "#f5f5f5",
-                    border: "1.5px solid #cccccc",
-                    fontFamily: "var(--font-body)",
-                  }}
-                  onFocus={(e) => (e.target.style.borderColor = "#555555")}
-                  onBlur={(e) => (e.target.style.borderColor = "#cccccc")}
+                  className="cw-input w-full pr-[44px] text-[15px]"
+                  style={{ fontFamily: "var(--font-body)" }}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#aaaaaa] hover:text-[#555555] transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 transition-colors theme-text-disabled"
                   tabIndex={-1}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--brand-text-muted)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--brand-text-disabled)")}
                 >
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -127,7 +131,13 @@ export default function AdminLoginPage() {
             </div>
 
             {error && (
-              <p className="text-sm text-red-400 bg-red-900/20 px-3 py-2 rounded-lg border border-red-900/30">
+              <p
+                className="text-sm px-3 py-2 rounded-lg"
+                style={{
+                  background: "var(--state-error-soft)",
+                  color: "var(--state-error-dark)",
+                }}
+              >
                 {error}
               </p>
             )}
@@ -136,10 +146,11 @@ export default function AdminLoginPage() {
               id="admin-login-btn"
               type="submit"
               disabled={loading || !password}
-              className="w-full py-[12px] rounded-xl font-bold text-white transition-all"
+              className="cw-button w-full font-bold text-white transition-all"
               style={{
-                background: loading || !password ? "#cccccc" : "#111111",
-                boxShadow: loading || !password ? "none" : "0 2px 8px rgba(0,0,0,0.2)",
+                background: loading || !password ? "var(--brand-border)" : "var(--brand-accent)",
+                color: loading || !password ? "var(--brand-text-muted)" : "var(--brand-on-accent)",
+                boxShadow: loading || !password ? "none" : "var(--shadow-button)",
               }}
             >
               {loading ? "Signing in..." : "Sign in"}
@@ -150,7 +161,9 @@ export default function AdminLoginPage() {
         <p className="text-center mt-[24px]">
           <a
             href="/book"
-            className="text-sm text-[#888888] hover:text-[#333333] transition-colors"
+            className="text-sm theme-text-meta transition-colors"
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--brand-text)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--brand-text-metadata)")}
           >
             ← Back to booking
           </a>

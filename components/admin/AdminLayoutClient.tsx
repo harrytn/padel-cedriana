@@ -14,7 +14,7 @@ export default function AdminLayoutClient({ role, children }: AdminLayoutClientP
 
   return (
     <RoleProvider role={role}>
-      <div className="bg-[#f5f5f5] min-h-screen flex relative">
+      <div className="min-h-screen flex relative" style={{ background: "var(--brand-bg)" }}>
         {/* Sidebar */}
         <AdminSidebar
           isCollapsed={isCollapsed}

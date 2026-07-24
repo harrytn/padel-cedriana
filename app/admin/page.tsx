@@ -4,6 +4,7 @@ import { useI18n } from "@/lib/i18n";
 import { getSlotEnd } from "@/lib/slots";
 import { formatPrice } from "@/lib/currency";
 import { useRole } from "@/lib/role-context";
+import { ACTIVE_THEME } from "@/lib/theme";
 
 interface BookingRecord {
   id: string;
@@ -33,13 +34,17 @@ function todayISO(): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 
-const STATUS_COLORS: Record<string, { bg: string; text: string; labelKey: string }> = {
-  PAID: { bg: "#f0f0f0", text: "#333333", labelKey: "status_paid" },
-  PENDING_PAYMENT: { bg: "#e8e8e8", text: "#555555", labelKey: "status_pending" },
-  CANCELLED: { bg: "#e0e0e0", text: "#888888", labelKey: "status_cancelled" },
-  ARRIVED: { bg: "#d5d5d5", text: "#222222", labelKey: "status_arrived" },
-  NO_SHOW: { bg: "#eeeeee", text: "#777777", labelKey: "status_no_show" },
-};
+/** Maps booking status to the CSS badge class from globals.css */
+function statusBadgeClass(status: string): string {
+  const map: Record<string, string> = {
+    PAID: "badge-paid",
+    PENDING_PAYMENT: "badge-pending",
+    CANCELLED: "badge-cancelled",
+    ARRIVED: "badge-arrived",
+    NO_SHOW: "badge-noshow",
+  };
+  return map[status] ?? "badge-noshow";
+}
 
 export default function AdminSchedulePage() {
   const { t } = useI18n();
@@ -170,8 +175,12 @@ export default function AdminSchedulePage() {
       {/* Toast */}
       {toast && (
         <div
-          className="fixed top-4 right-4 px-[20px] py-[12px] rounded-xl text-white font-medium text-sm z-50 shadow-lg"
-          style={{ background: "#1e293b", border: "1px solid #334155" }}
+          className="fixed top-4 right-4 px-[20px] py-[12px] rounded-xl font-medium text-sm z-50"
+          style={{
+            background: "var(--brand-primary)",
+            color: "var(--brand-on-primary)",
+            boxShadow: "var(--shadow-panel)",
+          }}
         >
           {toast}
         </div>
@@ -180,12 +189,13 @@ export default function AdminSchedulePage() {
       {/* Page header */}
       <div className="flex items-center justify-between mb-[32px]">
         <div>
-          <h1
-            className="text-[24px] font-bold text-[#111111] tracking-tight"
-          >
+          <h1 className="text-[24px] font-bold tracking-tight theme-text-strong">
             📅 {t.admin_schedule_title}
           </h1>
-          <p className="text-[#888888] text-[14px] font-bold mt-[4px]">Hotel Name — Padel Court</p>
+          <p className="text-[14px] font-bold mt-[4px] theme-text-muted">
+            {ACTIVE_THEME.name}
+            {ACTIVE_THEME.location ? ` — ${ACTIVE_THEME.location}` : ""} · Padel Court
+          </p>
         </div>
         <input
           id="admin-date-picker"
@@ -197,17 +207,15 @@ export default function AdminSchedulePage() {
       </div>
 
       {/* Schedule table */}
-      <div
-        className="cw-glass-card w-full overflow-x-auto p-0 border-none"
-      >
+      <div className="cw-glass-card w-full overflow-x-auto p-0 border-none">
         <table className="w-full whitespace-nowrap min-w-max">
           <thead>
-            <tr className="border-b border-[#1E2438]/10">
+            <tr style={{ borderBottom: "1px solid var(--brand-border)" }}>
               {[t.admin_col_time, t.admin_col_type, t.admin_col_client, t.admin_col_room, t.admin_col_pin, t.admin_col_price, t.admin_col_status, t.admin_col_actions].map(
                 (h) => (
                   <th
                     key={h}
-                    className="px-[24px] py-[16px] text-left text-[12px] font-bold text-[#1E2438]/60 uppercase tracking-wider"
+                    className="px-[24px] py-[16px] text-left text-[12px] font-bold uppercase tracking-wider theme-text-muted"
                   >
                     {h}
                   </th>
@@ -218,11 +226,12 @@ export default function AdminSchedulePage() {
           <tbody>
             {loading
               ? Array.from({ length: 9 }).map((_, i) => (
-                  <tr key={i} className="border-b border-[#1E2438]/5">
+                  <tr key={i} style={{ borderBottom: "1px solid var(--brand-border-subtle)" }}>
                     {Array.from({ length: 8 }).map((__, j) => (
                       <td key={j} className="px-[24px] py-[20px]">
                         <div
-                          className="h-[16px] rounded bg-[#1E2438]/10 animate-pulse w-[80%]"
+                          className="h-[16px] rounded animate-pulse w-[80%]"
+                          style={{ background: "var(--brand-surface-muted)" }}
                         />
                       </td>
                     ))}
@@ -230,27 +239,37 @@ export default function AdminSchedulePage() {
                 ))
               : schedule.map(({ slotStart, isPeak, booking }, i) => {
                   const isBlock = booking?.type === "ADMIN_BLOCK";
-                  const statusInfo = booking && STATUS_COLORS[booking.status];
                   const busy =
                     actionLoading === booking?.id || actionLoading === slotStart;
 
                   return (
                     <tr
                       key={slotStart}
-                      className="border-b border-[#1E2438]/5 transition-colors hover:bg-white/40"
                       style={{
+                        borderBottom: "1px solid var(--brand-border-subtle)",
                         opacity: busy ? 0.6 : 1,
+                        transition: "background 0.15s",
                       }}
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.background = "var(--brand-surface-neutral)")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.background = "transparent")
+                      }
                     >
                       {/* Time */}
                       <td className="px-[24px] py-[20px]">
                         <span
-                          className={`font-bold text-[15px] block ${isPeak ? "text-[#555555]" : "text-[#333333]"}`}
+                          className="font-bold text-[15px] block"
+                          style={{ color: isPeak ? "var(--brand-text-muted)" : "var(--brand-text)" }}
                         >
                           {slotStart} - {getSlotEnd(slotStart, settings?.slot_duration_minutes || 90)}
                         </span>
                         {isPeak && (
-                          <span className="text-[11px] text-[#777777] font-bold tracking-tight">
+                          <span
+                            className="text-[11px] font-bold tracking-tight"
+                            style={{ color: "var(--brand-on-highlight)", opacity: 0.8 }}
+                          >
                             ⚡ Peak hour
                           </span>
                         )}
@@ -259,41 +278,67 @@ export default function AdminSchedulePage() {
                       {/* Type */}
                       <td className="px-[24px] py-[20px]">
                         {booking ? (
-                          <span
-                            className="text-[11px] px-[12px] py-[6px] rounded-full font-bold uppercase tracking-wide"
-                            style={{
-                              background: isBlock ? "rgba(0,0,0,0.05)" : "rgba(0,0,0,0.07)",
-                              color: isBlock ? "#555555" : "#333333",
-                              border: `1px solid ${isBlock ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,0.12)"}`,
-                            }}
-                          >
+                          <span className={`badge-base ${isBlock ? "badge-blocked" : "badge-arrived"}`}>
                             {isBlock ? "🚫 Blocked" : "👤 Guest"}
                           </span>
                         ) : (
-                          <span className="text-[#bbbbbb] text-[14px] font-bold">—</span>
+                          <span className="theme-text-disabled text-[14px] font-bold">—</span>
                         )}
                       </td>
 
                       {/* Client name & Add-ons */}
                       <td className="px-[24px] py-[20px]">
                         <div className="flex flex-col gap-[4px]">
-                          <span className="text-[#111111] font-bold text-[14px]">
+                          <span className="font-bold text-[14px] theme-text-strong">
                             {booking && !isBlock
                               ? `${booking.customer_first_name} ${booking.customer_last_name}`
                               : "—"}
                           </span>
                           {booking && !isBlock && (
                             <div className="flex items-center gap-[6px]">
-                              {booking.racket_count > 0 && <span className="text-[11px] font-bold text-[#666666] bg-[#eeeeee] px-2 py-0.5 rounded-md">🎾 x{booking.racket_count}</span>}
-                              {booking.bought_balls_only && <span className="text-[11px] font-bold text-[#666666] bg-[#eeeeee] px-2 py-0.5 rounded-md">🎾 Balls</span>}
-                              {booking.needs_lighting && <span className="text-[11px] font-bold text-[#666666] bg-[#eeeeee] px-2 py-0.5 rounded-md">💡 Lighting</span>}
+                              {booking.racket_count > 0 && (
+                                <span
+                                  className="text-[11px] font-bold px-2 py-0.5 rounded-md"
+                                  style={{
+                                    background: "var(--brand-surface-neutral)",
+                                    color: "var(--brand-text-muted)",
+                                    border: "1px solid var(--brand-border)",
+                                  }}
+                                >
+                                  🎾 x{booking.racket_count}
+                                </span>
+                              )}
+                              {booking.bought_balls_only && (
+                                <span
+                                  className="text-[11px] font-bold px-2 py-0.5 rounded-md"
+                                  style={{
+                                    background: "var(--brand-surface-neutral)",
+                                    color: "var(--brand-text-muted)",
+                                    border: "1px solid var(--brand-border)",
+                                  }}
+                                >
+                                  🎾 Balls
+                                </span>
+                              )}
+                              {booking.needs_lighting && (
+                                <span
+                                  className="text-[11px] font-bold px-2 py-0.5 rounded-md"
+                                  style={{
+                                    background: "var(--brand-surface-neutral)",
+                                    color: "var(--brand-text-muted)",
+                                    border: "1px solid var(--brand-border)",
+                                  }}
+                                >
+                                  💡 Lighting
+                                </span>
+                              )}
                             </div>
                           )}
                         </div>
                       </td>
 
                       {/* Room */}
-                      <td className="px-[24px] py-[20px] text-[#1E2438] font-bold text-[14px]">
+                      <td className="px-[24px] py-[20px] font-bold text-[14px] theme-text-strong">
                         {booking?.room_number ?? "—"}
                       </td>
 
@@ -301,41 +346,50 @@ export default function AdminSchedulePage() {
                       <td className="px-[24px] py-[20px]">
                         {booking && !isBlock ? (
                           <span
-                            className="font-bold text-[14px] tracking-widest text-[#333333] bg-[#f0f0f0] px-[12px] py-[4px] rounded-lg border border-[#dddddd]"
+                            className="font-bold text-[14px] tracking-widest px-[12px] py-[4px] rounded-lg"
+                            style={{
+                              background: "var(--brand-surface-neutral)",
+                              color: "var(--brand-text-strong)",
+                              border: "1px solid var(--brand-border)",
+                            }}
                           >
                             {booking.booking_pin}
                           </span>
                         ) : (
-                          <span className="text-[#cccccc] font-bold">—</span>
+                          <span className="font-bold theme-text-disabled">—</span>
                         )}
                       </td>
 
                       {/* Price */}
                       <td className="px-[24px] py-[20px]">
                         {booking && !isBlock ? (
-                          <span className="text-[#111111] font-bold text-[14px]">{formatPrice(booking.total_price, booking.currency || settings?.currency)}</span>
+                          <span className="font-bold text-[14px] theme-text-strong">
+                            {formatPrice(booking.total_price, booking.currency || settings?.currency)}
+                          </span>
                         ) : (
-                          <span className="text-[#bbbbbb] font-bold">—</span>
+                          <span className="font-bold theme-text-disabled">—</span>
                         )}
                       </td>
 
                       {/* Status */}
                       <td className="px-[24px] py-[20px]">
                         {isBlock ? (
-                          <span
-                            className="text-[11px] font-bold px-[12px] py-[6px] rounded-full uppercase tracking-wide bg-[#eeeeee] text-[#777777] border border-[#dddddd]"
-                          >
-                            🚫 Blocked
-                          </span>
-                        ) : statusInfo ? (
-                          <span
-                            className="text-[11px] font-bold px-[12px] py-[6px] rounded-full uppercase tracking-wide bg-[#eeeeee] text-[#555555] border border-[#dddddd]"
-                          >
+                          <span className="badge-base badge-blocked">🚫 Blocked</span>
+                        ) : booking ? (
+                          <span className={`badge-base ${statusBadgeClass(booking.status)}`}>
                             {/* @ts-expect-error valid dynamic key mapping */}
-                            {t[statusInfo.labelKey] ?? statusInfo.labelKey}
+                            {t[
+                              {
+                                PAID: "status_paid",
+                                PENDING_PAYMENT: "status_pending",
+                                CANCELLED: "status_cancelled",
+                                ARRIVED: "status_arrived",
+                                NO_SHOW: "status_no_show",
+                              }[booking.status] ?? "status_free"
+                            ] ?? booking.status}
                           </span>
                         ) : (
-                          <span className="text-[#bbbbbb] text-[13px] font-bold">{t.status_free}</span>
+                          <span className="badge-free">{t.status_free}</span>
                         )}
                       </td>
 
@@ -348,12 +402,7 @@ export default function AdminSchedulePage() {
                               id={`block-slot-${slotStart.replace(":", "")}`}
                               onClick={() => blockSlot(slotStart)}
                               disabled={busy}
-                              className="text-xs px-[12px] py-[8px] rounded-lg font-medium transition-colors"
-                              style={{
-                                background: "#1e293b",
-                                color: "#94a3b8",
-                                border: "1px solid #334155",
-                              }}
+                              className="action-btn action-btn-block"
                             >
                               🚫 {t.admin_block_slot}
                             </button>
@@ -367,17 +416,12 @@ export default function AdminSchedulePage() {
                                 id={`mark-paid-${booking.id.slice(0, 8)}`}
                                 onClick={() => updateStatus(booking.id, "PAID")}
                                 disabled={busy}
-                                className="text-xs px-[12px] py-[8px] rounded-lg font-semibold transition-all"
-                                style={{
-                                  background: "rgba(22,163,74,0.15)",
-                                  color: "#4ade80",
-                                  border: "1px solid rgba(22,163,74,0.3)",
-                                }}
+                                className="action-btn action-btn-approve"
                               >
                                 {t.status_paid}
                               </button>
                             )}
-                            
+
                           {/* Check-in (ARRIVED) — both roles */}
                           {booking &&
                             !isBlock &&
@@ -386,12 +430,7 @@ export default function AdminSchedulePage() {
                                 id={`mark-arrived-${booking.id.slice(0, 8)}`}
                                 onClick={() => updateStatus(booking.id, "ARRIVED")}
                                 disabled={busy}
-                                className="text-xs px-[12px] py-[8px] rounded-lg font-semibold transition-all"
-                                style={{
-                                  background: "rgba(59,130,246,0.15)",
-                                  color: "#3b82f6",
-                                  border: "1px solid rgba(59,130,246,0.3)",
-                                }}
+                                className="action-btn action-btn-checkin"
                               >
                                 {t.admin_action_checkin}
                               </button>
@@ -405,12 +444,7 @@ export default function AdminSchedulePage() {
                                 id={`mark-noshow-${booking.id.slice(0, 8)}`}
                                 onClick={() => updateStatus(booking.id, "NO_SHOW")}
                                 disabled={busy}
-                                className="text-xs px-[12px] py-[8px] rounded-lg font-semibold transition-all"
-                                style={{
-                                  background: "rgba(107,114,128,0.15)",
-                                  color: "#6b7280",
-                                  border: "1px solid rgba(107,114,128,0.3)",
-                                }}
+                                className="action-btn action-btn-noshow"
                               >
                                 {t.admin_action_noshow}
                               </button>
@@ -421,12 +455,7 @@ export default function AdminSchedulePage() {
                             <button
                               onClick={() => cancelBooking(booking.id)}
                               disabled={busy}
-                              className="text-xs px-[12px] py-[8px] rounded-lg font-medium transition-all"
-                              style={{
-                                background: "rgba(239,68,68,0.1)",
-                                color: "#f87171",
-                                border: "1px solid rgba(239,68,68,0.2)",
-                              }}
+                              className="action-btn action-btn-cancel"
                             >
                               ❌
                             </button>
@@ -437,12 +466,7 @@ export default function AdminSchedulePage() {
                             <button
                               onClick={() => restoreBooking(booking.id)}
                               disabled={busy}
-                              className="text-xs px-[12px] py-[8px] rounded-lg font-medium transition-all"
-                              style={{
-                                background: "rgba(139,92,246,0.1)",
-                                color: "#8b5cf6",
-                                border: "1px solid rgba(139,92,246,0.2)",
-                              }}
+                              className="action-btn action-btn-restore"
                             >
                               🔄 {t.admin_action_restore}
                             </button>
@@ -453,12 +477,7 @@ export default function AdminSchedulePage() {
                             <button
                               onClick={() => unblockSlot(booking!.id)}
                               disabled={busy}
-                              className="text-xs px-[12px] py-[8px] rounded-lg font-medium transition-all"
-                              style={{
-                                background: "rgba(239,68,68,0.1)",
-                                color: "#f87171",
-                                border: "1px solid rgba(239,68,68,0.2)",
-                              }}
+                              className="action-btn action-btn-unblock"
                             >
                               {t.admin_unblock_slot}
                             </button>

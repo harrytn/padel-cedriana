@@ -5,6 +5,8 @@ import LanguageToggle from "@/components/ui/LanguageToggle";
 import SlotGrid from "@/components/booking/SlotGrid";
 import CheckoutModal from "@/components/booking/CheckoutModal";
 import { SlotData } from "@/components/booking/SlotCard";
+import { ACTIVE_THEME } from "@/lib/theme";
+import HotelLogo from "@/components/ui/HotelLogo";
 
 function todayISO(): string {
   const d = new Date();
@@ -70,28 +72,48 @@ export default function BookPage() {
     fetchSlots(selectedDate);
   };
 
+  const eyebrow = ACTIVE_THEME.location
+    ? `${ACTIVE_THEME.shortName ?? ACTIVE_THEME.name} · ${ACTIVE_THEME.location}`.toUpperCase()
+    : (ACTIVE_THEME.shortName ?? ACTIVE_THEME.name).toUpperCase();
+
   return (
-    <div className="bg-[#f5f5f5] min-h-screen">
+    <div className="theme-bg min-h-screen">
 
       <div className="max-w-[1500px] mx-auto px-8 py-8">
         
         {/* ── TOP HEADER ── */}
-        <header className="cw-mobile-header rounded-[12px] bg-white border border-[#e0e0e0] shadow-sm px-8 py-5 flex items-center justify-between gap-8">
+        <header
+          className="cw-mobile-header flex items-center justify-between gap-8"
+          style={{
+            background: "var(--brand-surface)",
+            border: "1px solid var(--brand-border)",
+            boxShadow: "var(--shadow-header)",
+            borderRadius: "var(--radius-header)",
+            padding: "20px 32px",
+          }}
+        >
           <div className="cw-mobile-title-row flex items-center justify-between gap-4 w-full md:w-auto">
-            {/* Left: Brand placeholder */}
-            <div className="flex items-center gap-[12px] shrink-0">
-              <div className="w-[48px] h-[48px] rounded-[10px] bg-[#e8e8e8] border border-[#d0d0d0] flex items-center justify-center">
-                <span className="text-[#999999] text-[11px] font-bold tracking-tight leading-tight text-center">LOGO</span>
+            {/* Left: Logo + eyebrow */}
+            <div className="flex items-center gap-[16px] shrink-0">
+              <HotelLogo />
+              <div className="hidden sm:flex flex-col justify-center">
+                <span
+                  className="text-[10px] font-bold tracking-[0.18em] uppercase theme-text-meta"
+                  style={{ letterSpacing: "0.18em" }}
+                >
+                  {eyebrow}
+                </span>
               </div>
-              <span className="font-bold text-[18px] text-[#111111] tracking-tight hidden sm:block">Hotel Name</span>
             </div>
             
             {/* Center: Title */}
             <div className="flex-1 flex flex-col justify-center sm:text-left text-right">
-              <h1 className="text-[20px] sm:text-[26px] md:text-[32px] font-extrabold text-[#111111] tracking-tight leading-tight">
+              <h1
+                className="text-[20px] sm:text-[26px] md:text-[32px] font-extrabold tracking-tight leading-tight theme-text-strong"
+              >
                 {t.book_title}
               </h1>
-              <span className="text-[13px] sm:text-[15px] font-medium text-[#666666] capitalize mt-1 hidden sm:block">
+              <span className="text-[13px] sm:text-[15px] font-medium theme-text-muted capitalize mt-1 hidden sm:block">
                 {selectedDate ? formatLocalizedDate(selectedDate, lang) : ""}
               </span>
             </div>
@@ -99,7 +121,21 @@ export default function BookPage() {
 
           {/* Right: Controls */}
           <div className="cw-mobile-controls-row flex items-center gap-6 shrink-0 w-full md:w-auto">
-            <input type="date" value={selectedDate} min={todayISO()} max={maxISO()} onChange={(e) => { setSelectedDate(e.target.value); setSelectedSlot(null); }} className="h-12 px-5 rounded-[8px] bg-white border border-[#cccccc] shadow-sm text-[15px] font-bold text-[#111111] outline-none focus:border-[#555555] transition-colors cursor-pointer w-full md:w-auto" />
+            <input
+              type="date"
+              value={selectedDate}
+              min={todayISO()}
+              max={maxISO()}
+              onChange={(e) => { setSelectedDate(e.target.value); setSelectedSlot(null); }}
+              className="h-12 px-5 text-[15px] font-bold outline-none cursor-pointer w-full md:w-auto"
+              style={{
+                background: "var(--brand-surface)",
+                border: "1px solid var(--brand-border)",
+                borderRadius: "var(--radius-control)",
+                color: "var(--brand-text-strong)",
+                boxShadow: "0 1px 4px var(--brand-border-subtle)",
+              }}
+            />
             <LanguageToggle />
           </div>
         </header>
@@ -114,33 +150,66 @@ export default function BookPage() {
               <nav className="cw-mobile-nav-primary flex flex-col gap-[12px]">
                 <a
                   href="#"
-                  className="cw-nav-item transition-all bg-[#f0f0f0] text-[#111111] font-bold text-[15px] shadow-sm border border-[#e0e0e0]"
+                  className="cw-nav-item transition-all font-bold text-[15px]"
+                  style={{
+                    background: "var(--brand-surface-neutral)",
+                    color: "var(--brand-text-strong)",
+                    border: "1px solid var(--brand-border)",
+                  }}
                 >
-                  <span className="material-symbols-outlined text-[24px] text-[#444444]">sports_tennis</span>
+                  <span
+                    className="material-symbols-outlined text-[24px]"
+                    style={{ color: "var(--brand-secondary)" }}
+                  >
+                    sports_tennis
+                  </span>
                   {t.courts}
                 </a>
               </nav>
 
               {/* Legend */}
               <div className="cw-mobile-legend cw-legend-root">
-                <p className="text-[12px] font-bold text-[#999999] uppercase tracking-widest mb-[16px]">
+                <p
+                  className="text-[12px] font-bold uppercase tracking-widest mb-[16px] theme-text-meta"
+                >
                   {t.legend}
                 </p>
                 <ul className="flex flex-col gap-[12px]">
-                  <li className="cw-legend-row text-[14px] font-medium text-[#555555]">
-                    <span className="w-4 h-4 rounded-md border-2 border-[#aaaaaa] bg-white shrink-0" />
+                  <li className="cw-legend-row text-[14px] font-medium theme-text-muted">
+                    <span
+                      className="w-4 h-4 rounded-md border-2 shrink-0"
+                      style={{
+                        background: "var(--state-available-bg)",
+                        borderColor: "var(--state-available-accent)",
+                      }}
+                    />
                     {t.available}
                   </li>
-                  <li className="cw-legend-row text-[14px] font-medium text-[#555555]">
-                    <span className="w-4 h-4 rounded-md bg-[#d5d5d5] border border-[#bbbbbb] shrink-0" />
+                  <li className="cw-legend-row text-[14px] font-medium theme-text-muted">
+                    <span
+                      className="w-4 h-4 rounded-md shrink-0"
+                      style={{
+                        background: "var(--state-occupied-bg)",
+                        border: "1px solid var(--state-occupied-border)",
+                      }}
+                    />
                     {t.occupied}
                   </li>
-                  <li className="cw-legend-row text-[14px] font-medium text-[#555555]">
-                    <span className="w-4 h-4 rounded-md bg-[#222222] shrink-0" />
+                  <li className="cw-legend-row text-[14px] font-medium theme-text-muted">
+                    <span
+                      className="w-4 h-4 rounded-md shrink-0"
+                      style={{ background: "var(--state-selected-bg)" }}
+                    />
                     {t.selected}
                   </li>
-                  <li className="cw-legend-row text-[14px] font-medium text-[#555555]">
-                    <span className="w-4 h-4 rounded-md bg-[#ececec] border border-[#cccccc] shrink-0" />
+                  <li className="cw-legend-row text-[14px] font-medium theme-text-muted">
+                    <span
+                      className="w-4 h-4 rounded-md shrink-0"
+                      style={{
+                        background: "var(--state-passed-bg)",
+                        border: "1px solid var(--state-passed-border)",
+                      }}
+                    />
                     {t.passed}
                   </li>
                 </ul>
@@ -150,9 +219,16 @@ export default function BookPage() {
               <nav className="cw-mobile-staff-link flex flex-col gap-[12px]">
                 <a
                   href="/admin"
-                  className="cw-nav-item transition-all text-[#555555] font-semibold text-[15px] hover:bg-[#f0f0f0]"
+                  className="cw-nav-item transition-all font-semibold text-[15px] theme-text-muted"
+                  style={{ "--hover-bg": "var(--brand-surface-neutral)" } as React.CSSProperties}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = "var(--brand-surface-neutral)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                 >
-                  <span className="material-symbols-outlined text-[24px] text-[#888888]">admin_panel_settings</span>
+                  <span
+                    className="material-symbols-outlined text-[24px] theme-text-meta"
+                  >
+                    admin_panel_settings
+                  </span>
                   {t.staffAccess}
                 </a>
               </nav>
@@ -162,11 +238,24 @@ export default function BookPage() {
           {/* ── WHITE CARD GRID PANEL ── */}
           <main className="cw-glass-panel cw-mobile-booking-first flex flex-col">
             <div className="cw-panel-heading flex items-center justify-between mb-[32px]">
-              <h2 className="text-[20px] sm:text-[24px] font-bold text-[#111111] tracking-tight flex items-center gap-3">
-                <span className="material-symbols-outlined text-[#555555] text-3xl shrink-0">sports_tennis</span>
+              <h2
+                className="text-[20px] sm:text-[24px] font-bold tracking-tight flex items-center gap-3 theme-text-strong"
+              >
+                <span
+                  className="material-symbols-outlined text-3xl shrink-0"
+                  style={{ color: "var(--brand-secondary)" }}
+                >
+                  sports_tennis
+                </span>
                 {t.availableSlots}
               </h2>
-              <span className="cw-panel-badge px-4 py-2 rounded-full bg-[#f0f0f0] text-[10px] sm:text-xs font-bold tracking-widest text-[#888888] shadow-sm border border-[#e0e0e0] shrink-0 uppercase">
+              <span
+                className="cw-panel-badge px-4 py-2 rounded-full text-[10px] sm:text-xs font-bold tracking-widest shadow-sm shrink-0 uppercase theme-text-meta"
+                style={{
+                  background: "var(--brand-surface-neutral)",
+                  border: "1px solid var(--brand-border)",
+                }}
+              >
                 {slots.length > 0 ? (
                   lang === "de"
                     ? `${slots.length} Slots / Tag`
@@ -178,7 +267,14 @@ export default function BookPage() {
             </div>
 
             {slotTakenError && (
-              <div className="mb-7 px-[20px] py-[16px] bg-[#f0f0f0] border border-[#cccccc] rounded-[8px] text-[14px] font-bold text-[#333333] text-center">
+              <div
+                className="mb-7 px-[20px] py-[16px] rounded-[8px] text-[14px] font-bold text-center"
+                style={{
+                  background: "var(--state-error-soft)",
+                  border: "1px solid var(--state-error)",
+                  color: "var(--state-error-dark)",
+                }}
+              >
                 ⚠️ {t.checkout_slot_taken}
               </div>
             )}
@@ -195,8 +291,10 @@ export default function BookPage() {
               selectedDate={selectedDate}
             />
 
-            <div className="mt-8 pt-6 border-t border-[#e0e0e0] text-center">
-              <p className="text-[13px] font-medium text-[#888888]">
+            <div
+              className="mt-8 pt-6 border-t text-center theme-border"
+            >
+              <p className="text-[13px] font-medium theme-text-meta">
                 {t.footerArrivalNote}
               </p>
             </div>

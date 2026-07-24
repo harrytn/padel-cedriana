@@ -39,7 +39,7 @@ export default function SlotGrid({
           <div
             key={i}
             className="flat-card h-24 animate-pulse"
-            style={{ background: "#eeeeee" }}
+            style={{ background: "var(--brand-surface-muted)" }}
           />
         ))}
       </div>
@@ -48,11 +48,17 @@ export default function SlotGrid({
 
   if (error) {
     return (
-      <div className="text-center py-12 bg-[#f5f5f5] rounded-xl border border-dashed border-[#cccccc]">
+      <div
+        className="text-center py-12 rounded-xl"
+        style={{
+          background: "var(--brand-surface-neutral)",
+          border: "1px dashed var(--brand-border)",
+        }}
+      >
         <div className="flex justify-center mb-4">
-          <AlertCircle size={48} strokeWidth={1} className="text-[#aaaaaa]" />
+          <AlertCircle size={48} strokeWidth={1} style={{ color: "var(--brand-text-disabled)" }} />
         </div>
-        <p className="text-sm font-bold text-[#888888] tracking-tight">
+        <p className="text-sm font-bold tracking-tight theme-text-muted">
           {error}
         </p>
       </div>
@@ -61,11 +67,17 @@ export default function SlotGrid({
 
   if (!slots.length) {
     return (
-      <div className="text-center py-12 bg-[#f8f8f8] rounded-xl border border-dashed border-[#d0d0d0]">
+      <div
+        className="text-center py-12 rounded-xl"
+        style={{
+          background: "var(--brand-surface-neutral)",
+          border: "1px dashed var(--brand-border)",
+        }}
+      >
         <div className="flex justify-center mb-4">
-          <Calendar size={48} strokeWidth={1} className="text-[#bbbbbb]" />
+          <Calendar size={48} strokeWidth={1} style={{ color: "var(--brand-text-disabled)" }} />
         </div>
-        <p className="text-sm font-medium text-[#999999] tracking-tight">
+        <p className="text-sm font-medium tracking-tight theme-text-meta">
           {t.book_select_date}
         </p>
       </div>

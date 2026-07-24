@@ -4,6 +4,8 @@ import { Suspense, useEffect, useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import LanguageToggle from "@/components/ui/LanguageToggle";
 import { CheckCircle2, Calendar, Clock, DollarSign, ArrowLeft, Download } from "lucide-react";
+import { ACTIVE_THEME } from "@/lib/theme";
+import HotelLogo from "@/components/ui/HotelLogo";
 
 import { formatLocalizedDate } from "@/lib/i18n/date";
 import { formatPrice } from "@/lib/currency";
@@ -38,14 +40,19 @@ function ConfirmationContent() {
   const displayCurrency = bookingCurrency || urlCurrency;
 
   return (
-    <div className="min-h-screen bg-[#f5f5f5] flex items-center justify-center p-[24px]">
+    <div
+      className="min-h-screen flex items-center justify-center p-[24px]"
+      style={{ background: "var(--brand-bg)" }}
+    >
 
       <div className="w-full max-w-2xl">
         {/* Top Navigation */}
         <div className="flex items-center justify-between mb-[24px]">
           <button
             onClick={() => router.push("/book")}
-            className="flex items-center gap-2 text-[11px] font-bold text-[#888888] hover:text-[#333333] uppercase tracking-[0.15em] transition-colors"
+            className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] transition-colors theme-text-meta hover:theme-text"
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--brand-text)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--brand-text-metadata)")}
           >
             <ArrowLeft size={14} />
             {t.confirm_another_btn}
@@ -53,31 +60,41 @@ function ConfirmationContent() {
           <LanguageToggle />
         </div>
 
-        {/* ── Neutral Receipt Card ── */}
+        {/* ── Confirmation Card ── */}
         <div className="cw-confirmation-card space-y-10">
 
           {/* Status Header */}
           <div className="flex flex-col items-center text-center">
-            <div className="w-[64px] h-[64px] rounded-full bg-[#222222] flex items-center justify-center mb-[20px] shadow-md">
+            <div
+              className="w-[64px] h-[64px] rounded-full flex items-center justify-center mb-[20px] shadow-md"
+              style={{ background: "var(--brand-secondary)" }}
+            >
               <CheckCircle2 size={32} strokeWidth={1.5} className="text-white" />
             </div>
-            <h1 className="text-2xl md:text-3xl font-bold text-[#111111] tracking-tight mb-1">
+            <h1
+              className="text-2xl md:text-3xl font-bold tracking-tight mb-1 theme-text-strong"
+            >
               {t.bookingConfirmed}
             </h1>
-            <p className="text-[13px] font-medium text-[#999999] uppercase tracking-widest">
+            <p className="text-[13px] font-medium uppercase tracking-widest theme-text-meta">
               {t.reservationConfirmed}
             </p>
           </div>
 
           {/* PIN / Reservation Code */}
-          <div className="cw-confirmation-section py-8 border-y border-[#e0e0e0] text-center">
-            <span className="text-sm font-semibold text-[#888888] uppercase tracking-[0.2em] mb-4 block">
+          <div
+            className="cw-confirmation-section py-8 text-center"
+            style={{ borderTop: "1px solid var(--brand-border)", borderBottom: "1px solid var(--brand-border)" }}
+          >
+            <span className="text-sm font-semibold uppercase tracking-[0.2em] mb-4 block theme-text-meta">
               {t.yourBookingPin}
             </span>
-            <div className="text-5xl md:text-6xl font-bold text-[#111111] tracking-widest py-2">
+            <div
+              className="text-5xl md:text-6xl font-bold tracking-widest py-2 theme-text-strong"
+            >
               {pin}
             </div>
-            <p className="text-[11px] font-medium text-[#aaaaaa] mt-4 flex items-center justify-center gap-2">
+            <p className="text-[11px] font-medium mt-4 flex items-center justify-center gap-2 theme-text-disabled">
               <Download size={12} />
               {t.screenshotPinHint}
             </p>
@@ -87,46 +104,64 @@ function ConfirmationContent() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-[32px]">
             <div className="cw-confirmation-section space-y-1.5 p-0">
               <div className="flex items-center gap-2 mb-1">
-                <Calendar size={13} strokeWidth={1.5} className="text-[#888888]" />
-                <span className="text-sm font-semibold text-[#888888] uppercase">{t.date}</span>
+                <Calendar
+                  size={13}
+                  strokeWidth={1.5}
+                  style={{ color: "var(--brand-secondary)" }}
+                />
+                <span className="text-sm font-semibold uppercase theme-text-meta">{t.date}</span>
               </div>
-              <p className="text-lg font-medium text-[#111111] capitalize">{formatLocalizedDate(date, lang)}</p>
+              <p className="text-lg font-medium capitalize theme-text-strong">
+                {formatLocalizedDate(date, lang)}
+              </p>
             </div>
             <div className="cw-confirmation-section space-y-1.5 p-0">
               <div className="flex items-center gap-2 mb-1">
-                <Clock size={13} strokeWidth={1.5} className="text-[#888888]" />
-                <span className="text-sm font-semibold text-[#888888] uppercase">{t.slot}</span>
+                <Clock
+                  size={13}
+                  strokeWidth={1.5}
+                  style={{ color: "var(--brand-secondary)" }}
+                />
+                <span className="text-sm font-semibold uppercase theme-text-meta">{t.slot}</span>
               </div>
-              <p className="text-lg font-medium text-[#111111]">{slot} — {t.book_duration.replace("{count}", duration)}</p>
+              <p className="text-lg font-medium theme-text-strong">
+                {slot} — {t.book_duration.replace("{count}", duration)}
+              </p>
             </div>
             <div className="cw-confirmation-section space-y-1.5 p-0">
               <div className="flex items-center gap-2 mb-1">
-                <DollarSign size={13} strokeWidth={1.5} className="text-[#888888]" />
-                <span className="text-sm font-semibold text-[#888888] uppercase">{t.amountToPay}</span>
+                <DollarSign
+                  size={13}
+                  strokeWidth={1.5}
+                  style={{ color: "var(--brand-secondary)" }}
+                />
+                <span className="text-sm font-semibold uppercase theme-text-meta">{t.amountToPay}</span>
               </div>
-              <p className="text-lg font-medium text-[#111111]">{formatPrice(Number(total), displayCurrency)}</p>
+              <p className="text-lg font-medium theme-text-strong">
+                {formatPrice(Number(total), displayCurrency)}
+              </p>
             </div>
           </div>
 
           {/* Instructions Notice */}
-          <div className="cw-confirmation-instructions bg-[#f5f5f5] border border-[#e0e0e0] mt-[24px]">
-            <p className="text-[11px] font-bold text-[#888888] uppercase tracking-[0.1em] mb-[8px]">
+          <div className="cw-confirmation-instructions theme-info-box mt-[24px]">
+            <p className="text-[11px] font-bold uppercase tracking-[0.1em] mb-[8px] theme-text-meta">
               {t.instructions}
             </p>
-            <p className="text-sm font-medium text-[#333333] leading-relaxed">
+            <p className="text-sm font-medium leading-relaxed theme-text">
               {t.confirmationInstructions}
             </p>
           </div>
         </div>
 
-        {/* Footer placeholder */}
-        <div className="mt-[32px] text-center">
-          <div className="inline-flex items-center justify-center gap-[8px] opacity-40">
-            <div className="w-5 h-5 rounded-[4px] bg-[#cccccc] border border-[#bbbbbb]" />
-            <p className="text-[10px] font-bold tracking-[0.25em] text-[#999999] uppercase">
-              Hotel Name
+        {/* Footer — hotel logo */}
+        <div className="mt-[32px] flex flex-col items-center justify-center gap-[8px] opacity-60">
+          <HotelLogo size="mobile" />
+          {ACTIVE_THEME.location && (
+            <p className="text-[10px] font-bold tracking-[0.25em] uppercase theme-text-meta">
+              {ACTIVE_THEME.location}
             </p>
-          </div>
+          )}
         </div>
       </div>
     </div>
@@ -136,8 +171,13 @@ function ConfirmationContent() {
 export default function ConfirmationPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-[#f5f5f5] flex items-center justify-center">
-        <span className="text-[11px] font-bold text-[#aaaaaa] tracking-widest uppercase">Loading...</span>
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ background: "var(--brand-bg)" }}
+      >
+        <span className="text-[11px] font-bold uppercase tracking-widest theme-text-disabled">
+          Loading...
+        </span>
       </div>
     }>
       <ConfirmationContent />

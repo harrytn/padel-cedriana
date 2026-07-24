@@ -23,19 +23,188 @@
 }
 
 
+/* ─────────────────────────────
+   NEUTRAL BASE THEME
+   :root defaults — black/white/gray palette.
+   These values apply when no [data-theme] is set.
+   Do NOT scatter hex colors in components; use these variables.
+───────────────────────────── */
+
 :root {
-  --bg-sand: #f5f5f5;
-  --text-charcoal: #1a1a1a;
-  --primary-green: #222222;
-  --hover-green: #444444;
-  --highlight-coral: #888888;
-  --highlight-yellow: #aaaaaa;
+  /* Brand palette */
+  --brand-primary: #111111;
+  --brand-primary-dark: #000000;
+  --brand-on-primary: #ffffff;
+
+  --brand-secondary: #444444;
+  --brand-secondary-soft: #eeeeee;
+  --brand-on-secondary: #ffffff;
+
+  --brand-accent: #333333;
+  --brand-accent-dark: #111111;
+  --brand-on-accent: #ffffff;
+
+  --brand-highlight: #aaaaaa;
+  --brand-highlight-soft: #eeeeee;
+  --brand-on-highlight: #333333;
+
+  --brand-info: #666666;
+  --brand-info-soft: #e0e0e0;
+  --brand-info-softest: #f0f0f0;
+
+  /* Surfaces */
+  --brand-bg: #f5f5f5;
+  --brand-surface: #ffffff;
+  --brand-surface-muted: #f0f0f0;
+  --brand-surface-neutral: #f5f5f5;
+  --brand-surface-disabled: #ececec;
+
+  /* Borders */
+  --brand-border: #e0e0e0;
+  --brand-border-subtle: rgba(0, 0, 0, 0.08);
+
+  /* Text */
+  --brand-text: #1a1a1a;
+  --brand-text-strong: #111111;
+  --brand-text-muted: #666666;
+  --brand-text-metadata: #999999;
+  --brand-text-disabled: #aaaaaa;
+
+  /* Semantic states */
+  --state-success: #444444;
+  --state-success-soft: #eeeeee;
+  --state-warning: #aaaaaa;
+  --state-warning-soft: #eeeeee;
+  --state-error: #888888;
+  --state-error-dark: #555555;
+  --state-error-soft: #eeeeee;
+
+  /* Slot card states */
+  --state-available-bg: #ffffff;
+  --state-available-border: #cccccc;
+  --state-available-accent: #444444;
+  --state-occupied-bg: #e0e0e0;
+  --state-occupied-border: #cccccc;
+  --state-occupied-text: rgba(26, 26, 26, 0.5);
+  --state-selected-bg: #111111;
+  --state-selected-bg-end: #333333;
+  --state-selected-text: #ffffff;
+  --state-passed-bg: #ececec;
+  --state-passed-border: #d0d0d0;
+  --state-passed-text: #999999;
+  --state-peak-bg: #e0e0e0;
+  --state-peak-text: #333333;
+
+  /* Radii */
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --radius-panel: 16px;
+  --radius-header: 12px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-panel: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --shadow-header: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-selected: 0 8px 20px rgba(0, 0, 0, 0.14);
+  --shadow-button: 0 2px 8px rgba(0, 0, 0, 0.12);
+
+  /* Legacy aliases — kept for any residual uses, mapped to brand variables */
+  --bg-sand: var(--brand-bg);
+  --text-charcoal: var(--brand-text);
+  --primary-green: var(--brand-primary);
+  --hover-green: var(--brand-secondary);
+  --highlight-coral: var(--brand-accent);
+  --highlight-yellow: var(--brand-highlight);
   --font-body: var(--font-inter), "Inter", sans-serif;
-  --btn-interactive: #e5e5e5;
-  --btn-interactive-hover: #d0d0d0;
-  --slot-booked-bg: #e0e0e0;
-  --slot-booked-text: rgba(26, 26, 26, 0.4);
+  --btn-interactive: var(--brand-surface-neutral);
+  --btn-interactive-hover: var(--brand-surface-muted);
+  --slot-booked-bg: var(--state-occupied-bg);
+  --slot-booked-text: var(--state-occupied-text);
 }
+
+
+/* ─────────────────────────────
+   CEDRIANA HOTEL THEME
+   Activates when <html data-theme="cedriana">.
+   Overrides only the CSS variables; all layout and spacing is untouched.
+   Must stay in sync with CEDRIANA_THEME in lib/theme.ts.
+───────────────────────────── */
+
+[data-theme="cedriana"] {
+  --brand-primary: #172766;
+  --brand-primary-dark: #101D50;
+  --brand-on-primary: #ffffff;
+
+  --brand-secondary: #317C78;
+  --brand-secondary-soft: #DDECDF;
+  --brand-on-secondary: #ffffff;
+
+  --brand-accent: #E83F3D;
+  --brand-accent-dark: #CA2F34;
+  --brand-on-accent: #ffffff;
+
+  --brand-highlight: #F8C51C;
+  --brand-highlight-soft: #FFF1A8;
+  --brand-on-highlight: #776318;
+
+  --brand-info: #4D8EB7;
+  --brand-info-soft: #DCEEFA;
+  --brand-info-softest: #EFF8FD;
+
+  --brand-bg: #FCFAF5;
+  --brand-surface: #ffffff;
+  --brand-surface-muted: #F4ECDF;
+  --brand-surface-neutral: #F5F2EB;
+  --brand-surface-disabled: #F1EFEB;
+
+  --brand-border: #DDD7CC;
+  --brand-border-subtle: rgba(23, 39, 102, 0.09);
+
+  --brand-text: #17213B;
+  --brand-text-strong: #172766;
+  --brand-text-muted: #77766F;
+  --brand-text-metadata: #969188;
+  --brand-text-disabled: #AAA79F;
+
+  --state-success: #317C78;
+  --state-success-soft: #DDECDF;
+  --state-warning: #F8C51C;
+  --state-warning-soft: #FFF1A8;
+  --state-error: #E83F3D;
+  --state-error-dark: #CA2F34;
+  --state-error-soft: #FCE3E2;
+
+  --state-available-bg: #ffffff;
+  --state-available-border: #DDD7CC;
+  --state-available-accent: #317C78;
+  --state-occupied-bg: #FFF1A8;
+  --state-occupied-border: #F8C51C;
+  --state-occupied-text: #776318;
+  --state-selected-bg: #172766;
+  --state-selected-bg-end: #263B85;
+  --state-selected-text: #ffffff;
+  --state-passed-bg: #F1EFEB;
+  --state-passed-border: #E5E1DA;
+  --state-passed-text: #AAA79F;
+  --state-peak-bg: #FFF0A7;
+  --state-peak-text: #776318;
+
+  --radius-control: 13px;
+  --radius-card: 17px;
+  --radius-panel: 25px;
+  --radius-header: 28px;
+  --radius-pill: 999px;
+
+  --shadow-panel: 0 16px 45px rgba(24, 38, 80, 0.10);
+  --shadow-header: 0 10px 32px rgba(23, 39, 102, 0.08);
+  --shadow-selected: 0 13px 24px rgba(23, 39, 102, 0.20);
+  --shadow-button: 0 7px 15px rgba(232, 63, 61, 0.20);
+}
+
+
+/* ─────────────────────────────
+   GLOBAL RESETS
+───────────────────────────── */
 
 * {
   box-sizing: border-box;
@@ -45,8 +214,8 @@
 
 body {
   font-family: var(--font-body);
-  background: #f5f5f5;
-  color: var(--text-charcoal);
+  background: var(--brand-bg);
+  color: var(--brand-text);
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
@@ -57,12 +226,166 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
 }
 
+
+/* ─────────────────────────────
+   SEMANTIC UTILITY CLASSES
+   Prefer these in TSX over inline style={{ color: "var(...)" }}.
+   Keeps components readable while consuming theme variables.
+───────────────────────────── */
+
+/* Text */
+.theme-text         { color: var(--brand-text); }
+.theme-text-strong  { color: var(--brand-text-strong); }
+.theme-text-muted   { color: var(--brand-text-muted); }
+.theme-text-meta    { color: var(--brand-text-metadata); }
+.theme-text-disabled { color: var(--brand-text-disabled); }
+
+/* Surfaces */
+.theme-surface         { background: var(--brand-surface); }
+.theme-surface-neutral { background: var(--brand-surface-neutral); }
+.theme-surface-muted   { background: var(--brand-surface-muted); }
+.theme-surface-disabled { background: var(--brand-surface-disabled); }
+.theme-bg              { background: var(--brand-bg); }
+
+/* Borders */
+.theme-border        { border-color: var(--brand-border); }
+.theme-border-subtle { border-color: var(--brand-border-subtle); }
+
+/* Brand colors */
+.theme-primary     { background: var(--brand-primary); color: var(--brand-on-primary); }
+.theme-secondary   { background: var(--brand-secondary); color: var(--brand-on-secondary); }
+.theme-accent      { background: var(--brand-accent); color: var(--brand-on-accent); }
+
+/* Info / state surfaces */
+.theme-info-box {
+  background: var(--brand-info-softest);
+  border: 1px solid var(--brand-info-soft);
+  border-radius: var(--radius-card);
+}
+
+/* ─── Status badge classes ─── */
+.badge-base {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.badge-paid {
+  background: var(--state-success-soft);
+  color: var(--state-success);
+  border: 1px solid var(--brand-secondary-soft);
+}
+
+.badge-pending {
+  background: var(--state-warning-soft);
+  color: var(--brand-on-highlight);
+  border: 1px solid var(--brand-highlight-soft);
+}
+
+.badge-cancelled {
+  background: var(--state-error-soft);
+  color: var(--state-error-dark);
+  border: 1px solid var(--state-error-soft);
+}
+
+.badge-arrived {
+  background: var(--brand-info-soft);
+  color: var(--brand-primary);
+  border: 1px solid var(--brand-info-soft);
+}
+
+.badge-noshow {
+  background: var(--brand-surface-disabled);
+  color: var(--brand-text-disabled);
+  border: 1px solid var(--brand-border);
+}
+
+.badge-blocked {
+  background: var(--brand-surface-disabled);
+  color: var(--brand-text-muted);
+  border: 1px solid var(--brand-border);
+}
+
+.badge-free {
+  color: var(--brand-text-disabled);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ─── Admin action button classes ─── */
+.action-btn {
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: var(--radius-control);
+  font-weight: 600;
+  transition: opacity 0.15s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.action-btn:hover { opacity: 0.85; }
+.action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.action-btn-approve {
+  background: var(--state-success-soft);
+  color: var(--state-success);
+  border: 1px solid var(--brand-secondary-soft);
+}
+
+.action-btn-checkin {
+  background: var(--brand-info-soft);
+  color: var(--brand-primary);
+  border: 1px solid var(--brand-info-soft);
+}
+
+.action-btn-noshow {
+  background: var(--brand-surface-neutral);
+  color: var(--brand-text-muted);
+  border: 1px solid var(--brand-border);
+}
+
+.action-btn-cancel {
+  background: var(--state-error-soft);
+  color: var(--state-error-dark);
+  border: 1px solid var(--state-error-soft);
+}
+
+.action-btn-restore {
+  background: var(--brand-secondary-soft);
+  color: var(--brand-secondary);
+  border: 1px solid var(--brand-secondary-soft);
+}
+
+.action-btn-block {
+  background: var(--brand-surface-disabled);
+  color: var(--brand-text-muted);
+  border: 1px solid var(--brand-border);
+}
+
+.action-btn-unblock {
+  background: var(--state-error-soft);
+  color: var(--state-error-dark);
+  border: 1px solid var(--state-error-soft);
+}
+
+
+/* ─────────────────────────────
+   LEGACY COMPONENT CLASSES
+   (kept for backward compatibility — now consume variables)
+───────────────────────────── */
+
 /* Minimalist Card */
 .flat-card {
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-card);
+  box-shadow: 0 2px 8px var(--brand-border-subtle);
 }
 
 /* Slot button styles */
@@ -70,43 +393,43 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   padding: 0.75rem 0.875rem;
   text-align: left;
-  border: 1px solid #d0d0d0;
-  border-radius: 10px;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-control);
   transition: all 0.2s ease;
-  background: #f0f0f0;
-  color: #1a1a1a;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  background: var(--brand-surface-neutral);
+  color: var(--brand-text);
+  box-shadow: 0 1px 2px var(--brand-border-subtle);
 }
 
 .ready-to-book:hover {
-  background: #e0e0e0;
+  background: var(--brand-surface-muted);
   transform: translateY(-1px);
 }
 
 .slot-selected {
-  background: #222222 !important;
-  color: white !important;
-  border-color: #222222 !important;
+  background: var(--state-selected-bg) !important;
+  color: var(--state-selected-text) !important;
+  border-color: var(--state-selected-bg) !important;
 }
 
 .slot-booked {
-  background: #e0e0e0 !important;
-  border-color: #cccccc !important;
-  color: rgba(26, 26, 26, 0.5) !important;
+  background: var(--state-occupied-bg) !important;
+  border-color: var(--state-occupied-border) !important;
+  color: var(--state-occupied-text) !important;
   cursor: not-allowed;
 }
 
 .slot-past {
-  background: rgba(0, 0, 0, 0.05) !important;
-  border-color: transparent !important;
-  color: rgba(0, 0, 0, 0.35) !important;
+  background: var(--state-passed-bg) !important;
+  border-color: var(--state-passed-border) !important;
+  color: var(--state-passed-text) !important;
   cursor: not-allowed;
   opacity: 0.8;
 }
 
 .slot-peak-badge {
-  background: #d0d0d0;
-  color: #333333;
+  background: var(--state-peak-bg);
+  color: var(--state-peak-text);
   font-size: 0.65rem;
   padding: 2px 6px;
   border-radius: 4px;
@@ -117,25 +440,25 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Custom buttons */
 .btn-primary {
-  background: #e5e5e5;
-  color: #1a1a1a;
+  background: var(--brand-accent);
+  color: var(--brand-on-accent);
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius-control);
   font-weight: 600;
-  transition: background 0.2s ease;
-  border: 1px solid #cccccc;
+  transition: opacity 0.2s ease;
+  border: none;
 }
 
 .btn-primary:hover {
-  background: #d0d0d0;
+  opacity: 0.88;
 }
 
 .btn-secondary {
-  background: white;
-  color: #222222;
-  border: 1px solid #aaaaaa;
+  background: var(--brand-surface);
+  color: var(--brand-text);
+  border: 1px solid var(--brand-border);
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius-control);
   font-weight: 500;
 }
 
@@ -143,26 +466,27 @@ h1, h2, h3, h4, h5, h6 {
 .minimal-input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #cccccc;
-  border-radius: 8px;
-  background: #ffffff;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-control);
+  background: var(--brand-surface);
+  color: var(--brand-text);
   outline: none;
   font-size: 0.875rem;
 }
 
 .minimal-input:focus {
-  border-color: #555555;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.06);
+  border-color: var(--brand-secondary);
+  box-shadow: 0 0 0 2px var(--brand-border-subtle);
 }
 
 /* Modal */
 .simple-modal {
-  background: white;
-  border-radius: 16px;
+  background: var(--brand-surface);
+  border-radius: var(--radius-panel);
   width: 100%;
   max-width: 500px;
   padding: 2rem;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-panel);
 }
 
 /* PIN */
@@ -170,7 +494,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 3.5rem;
   font-weight: 700;
   letter-spacing: 0.2em;
-  color: #111111;
+  color: var(--brand-text-strong);
   text-align: center;
   padding: 1rem 0;
 }
@@ -180,12 +504,13 @@ h1, h2, h3, h4, h5, h6 {
   width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: #f0f0f0;
+  background: var(--brand-surface-neutral);
 }
 ::-webkit-scrollbar-thumb {
-  background: #bbbbbb;
+  background: var(--brand-border);
   border-radius: 2px;
 }
+
 
 /* ─────────────────────────────
    Demo UI System — Neutral Spacing
@@ -195,43 +520,48 @@ h1, h2, h3, h4, h5, h6 {
    - Critical layout padding MUST use these .cw-* raw CSS classes.
    - All spacing must strictly follow the 4-point pixel system.
    - DO NOT replace these classes with standard Tailwind spacing utilities.
+
+   THEME NOTE:
+   - All padding/spacing/sizing values are FROZEN — do not change them.
+   - Only background, border-color, box-shadow, and border-radius
+     consume CSS variables and will respond to theme overrides.
 ───────────────────────────── */
 
 .cw-glass-panel {
   position: relative !important;
   box-sizing: border-box !important;
-  border-radius: 16px !important;
+  border-radius: var(--radius-panel) !important;
   padding: 36px 40px !important;
-  background: #ffffff !important;
-  border: 1px solid #e0e0e0 !important;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+  background: var(--brand-surface) !important;
+  border: 1px solid var(--brand-border) !important;
+  box-shadow: var(--shadow-panel) !important;
 }
 
 .cw-glass-card {
   position: relative !important;
   box-sizing: border-box !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-card) !important;
   padding: 28px 32px !important;
-  background: #f8f8f8 !important;
-  border: 1px solid #e0e0e0 !important;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+  background: var(--brand-surface-neutral) !important;
+  border: 1px solid var(--brand-border) !important;
+  box-shadow: 0 1px 4px var(--brand-border-subtle) !important;
 }
 
 .cw-confirmation-card {
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: var(--radius-panel);
   padding: 36px 40px;
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+  box-shadow: var(--shadow-panel);
 }
 
 .cw-confirmation-section {
   box-sizing: border-box;
   padding: 20px 24px;
-  border-radius: 12px;
+  border-radius: var(--radius-card);
   overflow-wrap: anywhere;
   word-break: normal;
 }
@@ -240,7 +570,7 @@ h1, h2, h3, h4, h5, h6 {
   box-sizing: border-box;
   width: 100%;
   padding: 20px 24px;
-  border-radius: 12px;
+  border-radius: var(--radius-card);
   overflow-wrap: break-word;
   line-height: 1.55;
 }
@@ -249,7 +579,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative !important;
   box-sizing: border-box !important;
   overflow: hidden !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-card) !important;
   min-height: 128px !important;
   padding: 28px 32px !important;
 }
@@ -258,18 +588,18 @@ h1, h2, h3, h4, h5, h6 {
   position: relative !important;
   box-sizing: border-box !important;
   width: 280px !important;
-  border-radius: 16px !important;
+  border-radius: var(--radius-panel) !important;
   padding: 28px 24px !important;
-  background: #ffffff !important;
-  border: 1px solid #e0e0e0 !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  background: var(--brand-surface) !important;
+  border: 1px solid var(--brand-border) !important;
+  box-shadow: var(--shadow-header) !important;
 }
 
 .cw-nav-item {
   box-sizing: border-box !important;
   min-height: 56px !important;
   padding: 0 20px !important;
-  border-radius: 10px !important;
+  border-radius: var(--radius-card) !important;
   display: flex !important;
   align-items: center !important;
   gap: 12px !important;
@@ -290,27 +620,35 @@ h1, h2, h3, h4, h5, h6 {
 .cw-form-card {
   position: relative !important;
   box-sizing: border-box !important;
-  border-radius: 16px !important;
+  border-radius: var(--radius-panel) !important;
   padding: 32px !important;
-  background: #ffffff !important;
-  border: 1px solid #e0e0e0 !important;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+  background: var(--brand-surface) !important;
+  border: 1px solid var(--brand-border) !important;
+  box-shadow: var(--shadow-panel) !important;
 }
 
 .cw-input {
   box-sizing: border-box !important;
   min-height: 48px !important;
   padding: 12px 16px !important;
-  border-radius: 8px !important;
-  background: #ffffff !important;
-  border: 1px solid #cccccc !important;
+  border-radius: var(--radius-control) !important;
+  background: var(--brand-surface) !important;
+  border: 1px solid var(--brand-border) !important;
+  color: var(--brand-text) !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.cw-input:focus {
+  outline: none !important;
+  border-color: var(--brand-secondary) !important;
+  box-shadow: 0 0 0 2px var(--brand-border-subtle) !important;
 }
 
 .cw-button {
   box-sizing: border-box !important;
   min-height: 48px !important;
   padding: 0 20px !important;
-  border-radius: 8px !important;
+  border-radius: var(--radius-control) !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -321,22 +659,23 @@ h1, h2, h3, h4, h5, h6 {
 .cw-modal-root {
   position: relative !important;
   box-sizing: border-box !important;
-  border-radius: 16px !important;
+  border-radius: var(--radius-panel) !important;
   padding: 36px !important;
-  background: #ffffff !important;
-  border: 1px solid #e0e0e0 !important;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.14) !important;
+  background: var(--brand-surface) !important;
+  border: 1px solid var(--brand-border) !important;
+  box-shadow: var(--shadow-panel) !important;
 }
 
 .cw-admin-card {
   position: relative !important;
   box-sizing: border-box !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-card) !important;
   padding: 28px 32px !important;
-  background: #f8f8f8 !important;
-  border: 1px solid #e0e0e0 !important;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+  background: var(--brand-surface-neutral) !important;
+  border: 1px solid var(--brand-border) !important;
+  box-shadow: 0 1px 4px var(--brand-border-subtle) !important;
 }
+
 
 /* ─────────────────────────────
    MOBILE UX POLISH (max-width: 768px)
@@ -371,7 +710,7 @@ h1, h2, h3, h4, h5, h6 {
 
   .cw-confirmation-card {
     padding: 28px 20px;
-    border-radius: 28px;
+    border-radius: var(--radius-panel);
   }
 
   .cw-confirmation-section {
@@ -423,7 +762,7 @@ h1, h2, h3, h4, h5, h6 {
   .cw-sidebar-root {
     width: 100% !important;
     padding: 24px 20px !important;
-    border-radius: 28px !important;
+    border-radius: var(--radius-panel) !important;
     display: flex !important;
     flex-direction: column !important;
   }
@@ -486,7 +825,7 @@ h1, h2, h3, h4, h5, h6 {
   .cw-glass-panel {
     width: 100% !important;
     padding: 28px 20px !important;
-    border-radius: 28px !important;
+    border-radius: var(--radius-panel) !important;
   }
   
   /* Panel Header Stacking */
@@ -515,7 +854,7 @@ h1, h2, h3, h4, h5, h6 {
   .cw-slot-card-root {
     min-height: 136px !important;
     padding: 24px 28px !important;
-    border-radius: 28px !important;
+    border-radius: var(--radius-panel) !important;
   }
   .cw-slot-card-inner {
     gap: 16px !important;

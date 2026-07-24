@@ -6,11 +6,12 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
-  Wind,
   ShieldCheck,
   UserRound,
 } from "lucide-react";
 import { useRole } from "@/lib/role-context";
+import { ACTIVE_THEME } from "@/lib/theme";
+import HotelLogo from "@/components/ui/HotelLogo";
 
 interface AdminSidebarProps {
   isCollapsed: boolean;
@@ -30,29 +31,59 @@ export default function AdminSidebar({ isCollapsed, toggleCollapse }: AdminSideb
 
   return (
     <div
-      className={`relative h-screen flex flex-col transition-all duration-300 ease-in-out shrink-0 border-r border-[#e0e0e0] bg-white ${
+      className={`relative h-screen flex flex-col transition-all duration-300 ease-in-out shrink-0 ${
         isCollapsed ? "w-20" : "w-[280px]"
       }`}
+      style={{
+        background: "var(--brand-surface)",
+        borderRight: "1px solid var(--brand-border)",
+      }}
     >
       {/* Toggle Button */}
       <button
         onClick={toggleCollapse}
-        className="absolute -right-3 top-10 w-6 h-6 rounded-full bg-white text-[#555555] flex items-center justify-center hover:bg-[#f5f5f5] transition-colors z-50 border border-[#e0e0e0] shadow-sm"
+        className="absolute -right-3 top-10 w-6 h-6 rounded-full flex items-center justify-center z-50 transition-colors theme-text-muted"
+        style={{
+          background: "var(--brand-surface)",
+          border: "1px solid var(--brand-border)",
+          boxShadow: "0 1px 4px var(--brand-border-subtle)",
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = "var(--brand-surface-neutral)")}
+        onMouseLeave={(e) => (e.currentTarget.style.background = "var(--brand-surface)")}
       >
         {isCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
       </button>
 
       {/* Header / Logo */}
       <div
-        className={`p-[24px] border-b border-[#e0e0e0] flex items-center gap-[12px] ${isCollapsed ? "justify-center" : ""}`}
+        className={`p-[24px] flex items-center gap-[12px] ${isCollapsed ? "justify-center" : ""}`}
+        style={{ borderBottom: "1px solid var(--brand-border)" }}
       >
-        <div className="shrink-0 text-[#555555]">
-          <Wind size={24} strokeWidth={1.5} />
-        </div>
-        {!isCollapsed && (
-          <div>
-            <h1 className="font-bold text-[#111111] text-[15px] tracking-tight uppercase">Hotel</h1>
-            <p className="text-[11px] text-[#888888] font-bold tracking-widest leading-none mt-[4px]">
+        {isCollapsed ? (
+          /* Collapsed: show initials or small logo */
+          <div
+            className="w-9 h-9 rounded-lg flex items-center justify-center font-extrabold text-sm shrink-0"
+            style={{
+              background: "var(--brand-surface-neutral)",
+              color: "var(--brand-text-strong)",
+              border: "1px solid var(--brand-border)",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            {(ACTIVE_THEME.shortName ?? ACTIVE_THEME.name)
+              .split(" ")
+              .filter(Boolean)
+              .slice(0, 2)
+              .map((w) => w[0].toUpperCase())
+              .join("")}
+          </div>
+        ) : (
+          /* Expanded: full logo */
+          <div className="flex flex-col gap-[6px]">
+            <HotelLogo size="mobile" />
+            <p
+              className="text-[10px] font-bold tracking-[0.18em] uppercase theme-text-meta"
+            >
               Staff Portal
             </p>
           </div>
@@ -63,9 +94,17 @@ export default function AdminSidebar({ isCollapsed, toggleCollapse }: AdminSideb
       <nav className="flex-1 p-[16px] flex flex-col gap-[8px] mt-[16px]">
         <a
           href="/admin"
-          className={`flex items-center gap-[12px] px-[16px] h-[48px] rounded-xl text-[14px] font-bold transition-all group ${
+          className={`flex items-center gap-[12px] px-[16px] h-[48px] rounded-xl text-[14px] font-bold transition-all ${
             isCollapsed ? "justify-center" : ""
-          } text-[#555555] hover:text-[#111111] hover:bg-[#f0f0f0]`}
+          } theme-text-muted`}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "var(--brand-surface-neutral)";
+            e.currentTarget.style.color = "var(--brand-text-strong)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.color = "var(--brand-text-muted)";
+          }}
         >
           <Calendar size={18} strokeWidth={1.5} className="shrink-0" />
           {!isCollapsed && <span>Schedule</span>}
@@ -75,9 +114,17 @@ export default function AdminSidebar({ isCollapsed, toggleCollapse }: AdminSideb
         {isAdmin && (
           <a
             href="/admin/settings"
-            className={`flex items-center gap-[12px] px-[16px] h-[48px] rounded-xl text-[14px] font-bold transition-all group ${
+            className={`flex items-center gap-[12px] px-[16px] h-[48px] rounded-xl text-[14px] font-bold transition-all ${
               isCollapsed ? "justify-center" : ""
-            } text-[#555555] hover:text-[#111111] hover:bg-[#f0f0f0]`}
+            } theme-text-muted`}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "var(--brand-surface-neutral)";
+              e.currentTarget.style.color = "var(--brand-text-strong)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.color = "var(--brand-text-muted)";
+            }}
           >
             <Settings size={18} strokeWidth={1.5} className="shrink-0" />
             {!isCollapsed && <span>Settings</span>}
@@ -86,24 +133,37 @@ export default function AdminSidebar({ isCollapsed, toggleCollapse }: AdminSideb
       </nav>
 
       {/* Role Badge + Logout */}
-      <div className="p-[16px] border-t border-[#e0e0e0] flex flex-col gap-[12px]">
+      <div
+        className="p-[16px] flex flex-col gap-[12px]"
+        style={{ borderTop: "1px solid var(--brand-border)" }}
+      >
         {/* Role Badge */}
         {!isCollapsed && (
           <div
-            className="flex items-center gap-[8px] px-[12px] py-[8px] rounded-xl bg-[#f5f5f5] border border-[#e0e0e0]"
+            className="flex items-center gap-[8px] px-[12px] py-[8px] rounded-xl"
+            style={{
+              background: "var(--brand-surface-neutral)",
+              border: "1px solid var(--brand-border)",
+            }}
           >
             {isAdmin ? (
-              <ShieldCheck size={16} className="text-[#555555] shrink-0" />
+              <ShieldCheck
+                size={16}
+                className="shrink-0"
+                style={{ color: "var(--brand-secondary)" }}
+              />
             ) : (
-              <UserRound size={16} className="text-[#555555] shrink-0" />
+              <UserRound
+                size={16}
+                className="shrink-0"
+                style={{ color: "var(--brand-secondary)" }}
+              />
             )}
             <div className="min-w-0">
-              <p
-                className="text-[12px] font-bold truncate text-[#333333]"
-              >
+              <p className="text-[12px] font-bold truncate theme-text-strong">
                 {isAdmin ? "Administrator" : "Reception"}
               </p>
-              <p className="text-[10px] font-bold text-[#888888] leading-none mt-0.5 uppercase tracking-wide">
+              <p className="text-[10px] font-bold leading-none mt-0.5 uppercase tracking-wide theme-text-meta">
                 {isAdmin ? "Full access" : "Limited access"}
               </p>
             </div>
@@ -112,9 +172,9 @@ export default function AdminSidebar({ isCollapsed, toggleCollapse }: AdminSideb
         {isCollapsed && (
           <div className="flex justify-center">
             {isAdmin ? (
-              <ShieldCheck size={18} className="text-[#777777]" />
+              <ShieldCheck size={18} style={{ color: "var(--brand-text-muted)" }} />
             ) : (
-              <UserRound size={18} className="text-[#777777]" />
+              <UserRound size={18} style={{ color: "var(--brand-text-muted)" }} />
             )}
           </div>
         )}
@@ -122,9 +182,17 @@ export default function AdminSidebar({ isCollapsed, toggleCollapse }: AdminSideb
         {/* Logout */}
         <button
           onClick={handleLogout}
-          className={`w-full flex items-center gap-[12px] px-[16px] h-[48px] rounded-xl text-[14px] font-bold transition-all group ${
+          className={`w-full flex items-center gap-[12px] px-[16px] h-[48px] rounded-xl text-[14px] font-bold transition-all ${
             isCollapsed ? "justify-center" : ""
-          } text-[#888888] hover:text-[#333333] hover:bg-[#f0f0f0]`}
+          } theme-text-muted`}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "var(--brand-surface-neutral)";
+            e.currentTarget.style.color = "var(--brand-text-strong)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.color = "var(--brand-text-muted)";
+          }}
         >
           <LogOut size={18} strokeWidth={1.5} className="shrink-0" />
           {!isCollapsed && <span>Sign out</span>}

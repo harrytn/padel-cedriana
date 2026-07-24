@@ -139,12 +139,14 @@ export default function CheckoutModal({
     if (amount === 0) return null;
     return (
       <div
-        className={`flex justify-between items-center text-[13px] ${
-          highlight ? "font-bold text-[#111111]" : "text-[#555555]"
-        }`}
+        className={`flex justify-between items-center text-[13px]`}
+        style={{
+          color: highlight ? "var(--brand-text-strong)" : "var(--brand-text-muted)",
+          fontWeight: highlight ? 700 : 500,
+        }}
       >
         <span>{label}</span>
-        <span className={highlight ? "text-[#111111]" : "text-[#333333]"}>
+        <span style={{ color: highlight ? "var(--brand-text-strong)" : "var(--brand-text)" }}>
           +{formatPrice(amount, settings.currency)}
         </span>
       </div>
@@ -152,22 +154,37 @@ export default function CheckoutModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-[16px]" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-[16px]"
+      style={{ background: "rgba(0,0,0,0.35)" }}
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
       <div className="cw-modal-root w-full max-w-[500px] max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex justify-between items-start mb-[32px]">
           <div>
-            <h2 className="text-xl font-bold text-[#111111] tracking-tight">{t.checkout_title}</h2>
+            <h2
+              className="text-xl font-bold tracking-tight theme-text-strong"
+            >
+              {t.checkout_title}
+            </h2>
             <div className="flex items-center gap-[8px] mt-[8px]">
-              <span className="text-sm font-medium text-[#666666]">{t.checkout_selected_slot}: {slot.slotStart}</span>
+              <span className="text-sm font-medium theme-text-muted">
+                {t.checkout_selected_slot}: {slot.slotStart}
+              </span>
               {slot.isPeak && (
-                <span className="slot-peak-badge">⚡ +{formatPrice(settings.peak_premium, settings.currency)} {t.book_peak_badge}</span>
+                <span className="slot-peak-badge">
+                  ⚡ +{formatPrice(settings.peak_premium, settings.currency)} {t.book_peak_badge}
+                </span>
               )}
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-[8px] hover:bg-[#f0f0f0] rounded-full transition-colors text-[#888888]"
+            className="p-[8px] rounded-full transition-colors theme-text-meta"
+            style={{ "--hover-bg": "var(--brand-surface-neutral)" } as React.CSSProperties}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "var(--brand-surface-neutral)")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
           >
             <X size={20} strokeWidth={1.5} />
           </button>
@@ -184,7 +201,12 @@ export default function CheckoutModal({
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
-              <User size={16} strokeWidth={1.5} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#1B4332]/40" />
+              <User
+                size={16}
+                strokeWidth={1.5}
+                className="absolute right-3 top-1/2 -translate-y-1/2"
+                style={{ color: "var(--brand-secondary)", opacity: 0.5 }}
+              />
             </div>
             <div className="relative">
               <input
@@ -194,7 +216,12 @@ export default function CheckoutModal({
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
-              <User size={16} strokeWidth={1.5} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#1B4332]/40" />
+              <User
+                size={16}
+                strokeWidth={1.5}
+                className="absolute right-3 top-1/2 -translate-y-1/2"
+                style={{ color: "var(--brand-secondary)", opacity: 0.5 }}
+              />
             </div>
             <div className="relative">
               <input
@@ -206,13 +233,18 @@ export default function CheckoutModal({
                 inputMode="numeric"
                 maxLength={4}
               />
-              <Home size={16} strokeWidth={1.5} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#1B4332]/40" />
+              <Home
+                size={16}
+                strokeWidth={1.5}
+                className="absolute right-3 top-1/2 -translate-y-1/2"
+                style={{ color: "var(--brand-secondary)", opacity: 0.5 }}
+              />
             </div>
           </div>
 
           {/* Rackets Add-on */}
           <div className="cw-glass-card flex flex-col gap-[16px] p-[24px]">
-            <div className="flex items-center gap-[8px] text-[#333333]">
+            <div className="flex items-center gap-[8px] theme-text">
               <ShoppingBag size={16} strokeWidth={1.5} />
               <p className="text-sm font-bold tracking-tight">{t.checkout_rackets_label}</p>
             </div>
@@ -221,11 +253,21 @@ export default function CheckoutModal({
                 <button
                   key={n}
                   onClick={() => setRacketCount(n)}
-                  className={`w-9 h-9 rounded-full text-sm font-bold transition-all border ${
+                  className="w-9 h-9 rounded-full text-sm font-bold transition-all"
+                  style={
                     racketCount === n
-                      ? "bg-[#111111] border-[#111111] text-white"
-                      : "bg-white border-[#cccccc] text-[#555555] hover:border-[#888888]"
-                  }`}
+                      ? {
+                          background: "var(--brand-accent)",
+                          borderColor: "var(--brand-accent)",
+                          color: "var(--brand-on-accent)",
+                          border: "2px solid var(--brand-accent)",
+                        }
+                      : {
+                          background: "var(--brand-surface)",
+                          border: "1px solid var(--brand-border)",
+                          color: "var(--brand-text-muted)",
+                        }
+                  }
                 >
                   {n}
                 </button>
@@ -233,13 +275,19 @@ export default function CheckoutModal({
             </div>
 
             {racketCount === 0 && (
-              <div className="flex items-center justify-between pt-4 border-t border-[#e0e0e0]">
-                <span className="text-[13px] font-bold text-[#333333]">{t.checkout_balls_only_label}</span>
-                <button 
+              <div
+                className="flex items-center justify-between pt-4"
+                style={{ borderTop: "1px solid var(--brand-border)" }}
+              >
+                <span className="text-[13px] font-bold theme-text">{t.checkout_balls_only_label}</span>
+                <button
                   onClick={() => setBallsOnly(!ballsOnly)}
-                  className={`w-10 h-5 rounded-full relative transition-colors ${ballsOnly ? 'bg-[#333333]' : 'bg-[#d0d0d0]'}`}
+                  className="w-10 h-5 rounded-full relative transition-colors"
+                  style={{ background: ballsOnly ? "var(--brand-secondary)" : "var(--brand-border)" }}
                 >
-                  <div className={`absolute top-1 w-3 h-3 rounded-full bg-white transition-all ${ballsOnly ? 'left-6' : 'left-1'}`} />
+                  <div
+                    className={`absolute top-1 w-3 h-3 rounded-full bg-white transition-all ${ballsOnly ? "left-6" : "left-1"}`}
+                  />
                 </button>
               </div>
             )}
@@ -248,46 +296,70 @@ export default function CheckoutModal({
           {/* Lighting Add-on */}
           {slot.hasLighting && (
             <div className="cw-glass-card p-[24px] flex items-center justify-between">
-              <div className="flex items-center gap-[8px] text-[#333333]">
+              <div className="flex items-center gap-[8px] theme-text">
                 <Lightbulb size={16} strokeWidth={1.5} />
                 <p className="text-sm font-bold tracking-tight">{t.checkout_lighting_label}</p>
               </div>
-              <button 
+              <button
                 onClick={() => setNeedsLighting(!needsLighting)}
-                className={`w-10 h-5 rounded-full relative transition-colors ${needsLighting ? 'bg-[#333333]' : 'bg-[#d0d0d0]'}`}
+                className="w-10 h-5 rounded-full relative transition-colors"
+                style={{ background: needsLighting ? "var(--brand-secondary)" : "var(--brand-border)" }}
               >
-                <div className={`absolute top-1 w-3 h-3 rounded-full bg-white transition-all ${needsLighting ? 'left-6' : 'left-1'}`} />
+                <div
+                  className={`absolute top-1 w-3 h-3 rounded-full bg-white transition-all ${needsLighting ? "left-6" : "left-1"}`}
+                />
               </button>
             </div>
           )}
 
           {/* Price Breakdown */}
-          <div className="bg-[#f5f5f5] rounded-xl p-[24px] flex flex-col gap-[12px]">
+          <div
+            className="rounded-xl p-[24px] flex flex-col gap-[12px]"
+            style={{
+              background: "var(--brand-surface-neutral)",
+            }}
+          >
             <PriceRow label={t.checkout_base.replace("{count}", slot.durationMinutes.toString())} amount={breakdown.base} />
             <PriceRow label={t.checkout_peak_surcharge} amount={breakdown.peakSurcharge} />
             <PriceRow label={t.checkout_rackets_fee} amount={breakdown.rackets} />
             <PriceRow label={t.checkout_balls_fee} amount={breakdown.ballsOnly} />
             <PriceRow label={t.checkout_lighting_fee} amount={breakdown.lighting} />
             
-            <div className="flex justify-between items-center pt-3 border-t border-[#dddddd]">
-              <span className="text-sm font-bold text-[#111111]">{t.checkout_total}</span>
-              <span className="text-xl font-bold text-[#111111]">{formatPrice(breakdown.total, settings.currency)}</span>
+            <div
+              className="flex justify-between items-center pt-3"
+              style={{ borderTop: "1px solid var(--brand-border)" }}
+            >
+              <span className="text-sm font-bold theme-text-strong">{t.checkout_total}</span>
+              <span className="text-xl font-bold theme-text-strong">{formatPrice(breakdown.total, settings.currency)}</span>
             </div>
           </div>
 
           {/* Error */}
           {error && (
-            <p className="text-xs font-semibold text-[#666666] text-center">{error}</p>
+            <p
+              className="text-xs font-semibold text-center"
+              style={{ color: "var(--state-error-dark)" }}
+            >
+              {error}
+            </p>
           )}
 
           {/* Actions */}
           <button
             onClick={handleSubmit}
             disabled={isSubmitting}
-            className="cw-button w-full bg-[#111111] text-white font-bold text-[15px] tracking-tight transition-opacity hover:opacity-80 disabled:opacity-40 mt-[8px]"
+            className="cw-button w-full text-[15px] tracking-tight transition-opacity hover:opacity-85 disabled:opacity-40 mt-[8px]"
+            style={{
+              background: "var(--brand-accent)",
+              color: "var(--brand-on-accent)",
+              boxShadow: "var(--shadow-button)",
+            }}
           >
             {isSubmitting ? (
-              <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <span
+                className="w-4 h-4 border-2 rounded-full animate-spin"
+                style={{ borderColor: "rgba(255,255,255,0.3)", borderTopColor: "white" }}
+              />
             ) : (
               <>
                 <span className="tracking-tight">{t.checkout_confirm_btn}</span>

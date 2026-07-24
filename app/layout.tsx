@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans, Rubik } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/lib/i18n";
+import { ACTIVE_THEME } from "@/lib/theme";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,9 +23,8 @@ const rubik = Rubik({
 });
 
 export const metadata: Metadata = {
-  title: "Padel Court Booking — Booking Demo",
-  description:
-    "Book your padel court. Select a time slot, add equipment, and confirm your reservation in seconds.",
+  title: `${ACTIVE_THEME.name} — Padel Court Booking`,
+  description: `Book your padel court at ${ACTIVE_THEME.name}${ACTIVE_THEME.location ? `, ${ACTIVE_THEME.location}` : ""}. Select a time slot, add equipment, and confirm your reservation in seconds.`,
 };
 
 export default function RootLayout({
@@ -33,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr">
+    <html lang="fr" data-theme={ACTIVE_THEME.id !== "neutral" ? ACTIVE_THEME.id : undefined}>
       <head>
         {/* Material Symbols Outlined — loaded as a <link> since next/font doesn't support variable icon fonts */}
         <link
