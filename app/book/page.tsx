@@ -213,7 +213,7 @@ export default function BookPage() {
                 <div style={{ position: "absolute", left: "15%", right: "15%", top: "15%", bottom: "15%", border: "1.5px dashed rgba(255, 255, 255, 0.12)" }} />
               </div>
 
-              {/* Yellow marker "01" */}
+              {/* Yellow marker */}
               <div
                 style={{
                   position: "absolute",
@@ -228,7 +228,7 @@ export default function BookPage() {
                   letterSpacing: "0.05em",
                 }}
               >
-                COURT 01
+                {t.court_badge}
               </div>
 
               {/* Details */}
@@ -238,14 +238,14 @@ export default function BookPage() {
                     className="text-[10px] font-bold uppercase tracking-wider"
                     style={{ color: "rgba(255, 255, 255, 0.7)", letterSpacing: "0.1em" }}
                   >
-                    Active court
+                    {t.court_active_label}
                   </span>
                   <h3 className="text-[18px] font-bold leading-tight mt-1" style={{ fontFamily: "var(--font-family-headline-lg)" }}>
-                    Court Panoramique
+                    {t.court_name}
                   </h3>
                 </div>
                 <div className="mt-8 text-[11px] font-medium" style={{ color: "rgba(255, 255, 255, 0.85)" }}>
-                  Extérieur • Gazon synthétique
+                  {t.court_description}
                 </div>
               </div>
             </div>

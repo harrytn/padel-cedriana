@@ -88,10 +88,13 @@ export default function SlotCard({ slot, isSelected, onClick, isPast }: SlotCard
       data-state={state}
       className="cw-slot-card-root flex text-left transition-all w-full group"
     >
-      {/* Yellow decorative accent triangle corner on selected card */}
-      {state === "selected" && (
+      {/* Yellow decorative accent triangle corner on selected & available hover */}
+      {(state === "selected" || state === "available") && (
         <span
           aria-hidden="true"
+          className={`transition-opacity duration-200 ${
+            state === "selected" ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+          }`}
           style={{
             position: "absolute",
             top: 0,
@@ -99,7 +102,7 @@ export default function SlotCard({ slot, isSelected, onClick, isPast }: SlotCard
             width: 0,
             height: 0,
             borderStyle: "solid",
-            borderWidth: "0 18px 18px 0",
+            borderWidth: "0 20px 20px 0",
             borderColor: "transparent var(--brand-highlight) transparent transparent",
             zIndex: 10,
           }}

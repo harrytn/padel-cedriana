@@ -32,6 +32,12 @@ export interface Translations {
   court: string;
   dateLabel: string;
 
+  // Sidebar court card
+  court_active_label: string;
+  court_name: string;
+  court_description: string;
+  court_badge: string;
+
   // Checkout modal
   checkout_title: string;
   checkout_selected_slot: string;
@@ -159,6 +165,11 @@ export const translations: Record<Language, Translations> = {
     court: "Court",
     dateLabel: "Date",
 
+    court_active_label: "COURT ACTIF",
+    court_name: "Court panoramique",
+    court_description: "Extérieur · Gazon synthétique",
+    court_badge: "COURT 01",
+
     checkout_title: "Finaliser la réservation",
     checkout_selected_slot: "Créneau sélectionné",
     checkout_first_name: "Prénom",
@@ -277,6 +288,11 @@ export const translations: Record<Language, Translations> = {
     court: "Court",
     dateLabel: "Date",
 
+    court_active_label: "ACTIVE COURT",
+    court_name: "Panoramic court",
+    court_description: "Outdoor · Synthetic turf",
+    court_badge: "COURT 01",
+
     checkout_title: "Complete Your Booking",
     checkout_selected_slot: "Selected Slot",
     checkout_first_name: "First Name",
@@ -394,6 +410,11 @@ export const translations: Record<Language, Translations> = {
     durationMinutes: "min",
     court: "Court",
     dateLabel: "Datum",
+
+    court_active_label: "AKTIVER PLATZ",
+    court_name: "Panorama-Platz",
+    court_description: "Außenbereich · Kunstrasen",
+    court_badge: "PLATZ 01",
 
     checkout_title: "Buchung abschließen",
     checkout_selected_slot: "Ausgewählter Slot",

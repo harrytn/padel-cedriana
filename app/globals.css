@@ -226,7 +226,7 @@ body {
 [data-theme="cedriana"] .theme-bg {
   background-color: var(--brand-bg);
   background-image: 
-    linear-gradient(180deg, rgba(252, 250, 245, 0.90) 0%, rgba(252, 250, 245, 0.96) 100%),
+    linear-gradient(180deg, rgba(252, 250, 245, 0.78) 0%, rgba(252, 250, 245, 0.85) 100%),
     url('/ChatGPT Image Jul 24, 2026, 12_34_22 PM.png');
   background-repeat: no-repeat;
   background-position: center top;
@@ -608,18 +608,20 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Blue Hover state on available slot cards */
 .cw-slot-card-root[data-state="available"]:hover {
-  background: var(--brand-info-softest) !important;
-  border-color: var(--brand-info) !important;
-  box-shadow: 0 12px 28px rgba(23, 39, 102, 0.16) !important;
-  transform: translateY(-3px) scale(1.01) !important;
+  background: linear-gradient(135deg, #254796 0%, #1A6C9B 100%) !important;
+  border-color: #254796 !important;
+  box-shadow: 0 14px 32px rgba(23, 39, 102, 0.28) !important;
+  transform: translateY(-4px) scale(1.01) !important;
 }
 
-.cw-slot-card-root[data-state="available"]:hover .cw-slot-time {
-  color: var(--brand-primary) !important;
+.cw-slot-card-root[data-state="available"]:hover span,
+.cw-slot-card-root[data-state="available"]:hover svg {
+  color: #ffffff !important;
 }
 
 .cw-slot-card-root[data-state="available"]:hover .cw-slot-cta {
-  color: var(--brand-accent) !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
   transform: translateX(4px) !important;
 }
 
