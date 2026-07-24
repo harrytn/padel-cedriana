@@ -8,6 +8,7 @@ import { SlotData } from "@/components/booking/SlotCard";
 import { ACTIVE_THEME } from "@/lib/theme";
 import HotelLogo from "@/components/ui/HotelLogo";
 import { formatLocalizedDate } from "@/lib/i18n/date";
+import { Trophy, ShieldCheck } from "lucide-react";
 
 function todayISO(): string {
   const d = new Date();
@@ -80,8 +81,7 @@ export default function BookPage() {
       className="theme-bg min-h-screen"
     >
       <div
-        className="max-w-[1400px] mx-auto"
-        style={{ padding: "28px 32px" }}
+        className="cw-mobile-page-container max-w-[1400px] mx-auto px-3 py-3 md:px-8 md:py-7"
       >
 
         {/* ── TOP HEADER ── */}
@@ -97,10 +97,10 @@ export default function BookPage() {
           }}
         >
           {/* Left: Logo block */}
-          <div className="flex items-center gap-[24px] shrink-0">
+          <div className="flex items-center gap-[24px] shrink-0 justify-between md:justify-start w-full md:w-auto">
             <HotelLogo />
             
-            {/* Elegant light blue title panel inside header */}
+            {/* Elegant light blue title panel inside header (desktop) */}
             <div
               className="hidden md:flex flex-col justify-center"
               style={{
@@ -135,22 +135,22 @@ export default function BookPage() {
             </div>
           </div>
 
-          {/* Mobile: title centered */}
-          <div className="flex-1 md:hidden text-center">
-            <h1 className="text-[18px] font-extrabold tracking-tight theme-text-strong">
+          {/* Mobile: Title below logo */}
+          <div className="w-full md:hidden text-left my-1">
+            <h1 className="text-[17px] font-extrabold tracking-tight theme-text-strong leading-snug">
               {t.book_title}
             </h1>
           </div>
 
-          {/* Right: Controls */}
-          <div className="cw-mobile-controls-row flex items-center gap-[12px] shrink-0">
+          {/* Controls row */}
+          <div className="cw-mobile-controls-row flex items-center gap-[12px] shrink-0 w-full md:w-auto">
             <input
               type="date"
               value={selectedDate}
               min={todayISO()}
               max={maxISO()}
               onChange={(e) => { setSelectedDate(e.target.value); setSelectedSlot(null); }}
-              className="h-11 px-4 text-[14px] font-bold outline-none cursor-pointer"
+              className="cw-input-date h-11 px-4 text-[14px] font-bold outline-none cursor-pointer"
               style={{
                 background: "var(--brand-surface-neutral)",
                 border: "1px solid var(--brand-border)",
@@ -265,12 +265,11 @@ export default function BookPage() {
                   minHeight: "52px",
                 }}
               >
-                <span
-                  className="material-symbols-outlined text-[22px] shrink-0"
+                <Trophy
+                  size={20}
+                  className="shrink-0"
                   style={{ color: "var(--brand-secondary)" }}
-                >
-                  sports_tennis
-                </span>
+                />
                 {t.courts}
               </a>
             </nav>
@@ -362,9 +361,7 @@ export default function BookPage() {
                 e.currentTarget.style.color = "var(--brand-text-muted)";
               }}
             >
-              <span className="material-symbols-outlined text-[20px] shrink-0" style={{ color: "var(--brand-text-meta)" }}>
-                admin_panel_settings
-              </span>
+              <ShieldCheck size={18} className="shrink-0" style={{ color: "var(--brand-text-meta)" }} />
               {t.staffAccess}
             </a>
           </aside>
@@ -381,21 +378,19 @@ export default function BookPage() {
             }}
           >
             {/* Panel header */}
-            <div className="flex items-center justify-between" style={{ marginBottom: "24px" }}>
+            <div className="cw-panel-heading flex flex-wrap items-center justify-between gap-2 mb-5 md:mb-6">
               <h2
-                className="font-bold tracking-tight flex items-center theme-text-strong"
-                style={{ fontSize: "20px", gap: "10px" }}
+                className="font-bold tracking-tight flex items-center theme-text-strong text-[18px] sm:text-[20px] gap-2.5"
               >
-                <span
-                  className="material-symbols-outlined shrink-0"
-                  style={{ fontSize: "26px", color: "var(--brand-secondary)" }}
-                >
-                  sports_tennis
-                </span>
+                <Trophy
+                  size={22}
+                  className="shrink-0"
+                  style={{ color: "var(--brand-secondary)" }}
+                />
                 {t.availableSlots}
               </h2>
               <span
-                className="text-[11px] font-bold tracking-widest uppercase shrink-0 theme-text-meta"
+                className="cw-panel-badge text-[10px] sm:text-[11px] font-bold tracking-widest uppercase shrink-0 theme-text-meta"
                 style={{
                   background: "var(--brand-surface-neutral)",
                   border: "1px solid var(--brand-border)",

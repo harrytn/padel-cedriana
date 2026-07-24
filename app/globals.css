@@ -749,188 +749,141 @@ h1, h2, h3, h4, h5, h6 {
 ───────────────────────────── */
 
 @media (max-width: 768px) {
-  /* Page gaps */
-  .cw-mobile-stack,
+  /* Outer layout & page padding */
+  .cw-mobile-page-container {
+    padding: 10px 12px !important;
+    max-width: 100% !important;
+  }
+
   .cw-mobile-main-flow {
     display: flex !important;
     flex-direction: column !important;
-    gap: 20px !important;
+    gap: 16px !important;
+    margin-top: 14px !important;
   }
-  
+
   .cw-mobile-booking-first {
     order: 1 !important;
+    width: 100% !important;
+    padding: 20px 16px !important;
+    border-radius: 20px !important;
   }
-  
+
   .cw-mobile-sidebar-second {
     order: 2 !important;
+    width: 100% !important;
+    padding: 18px 16px !important;
+    border-radius: 20px !important;
+    gap: 16px !important;
   }
 
-  /* Header Stacking & Sizing */
+  /* Compact Header */
   .cw-mobile-header {
     flex-direction: column !important;
-    align-items: flex-start !important;
-    padding: 16px 16px 20px 16px !important;
-    gap: 12px !important;
+    align-items: stretch !important;
+    padding: 12px 14px !important;
+    gap: 10px !important;
+    border-radius: 16px !important;
   }
 
-  .cw-confirmation-card {
-    padding: 28px 20px;
-    border-radius: var(--radius-panel);
-  }
-
-  .cw-confirmation-section {
-    padding: 16px 16px;
-  }
-
-  .cw-confirmation-instructions {
-    padding: 16px 16px;
-    font-size: 15px;
-    line-height: 1.5;
-  }
-  .cw-mobile-title-row {
-    width: 100% !important;
-    justify-content: space-between !important;
-    gap: 12px !important;
-  }
   .cw-mobile-controls-row {
     width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
     justify-content: space-between !important;
-    gap: 12px !important;
-  }
-  .cw-mobile-page-title {
-    font-size: 32px !important;
-    line-height: 1.12 !important;
-    letter-spacing: -0.02em !important;
+    gap: 8px !important;
   }
 
-  /* Date Picker & Language Toggle Fix */
+  /* Compact Date Picker & Language Toggle */
   .cw-input-date,
   input[type="date"] {
-    min-height: 52px !important;
-    height: 52px !important;
-    padding: 0 16px !important;
-    border-radius: 20px !important;
-    font-size: 16px !important; /* adjusted for better fit than 20px on dates */
+    min-height: 40px !important;
+    height: 40px !important;
+    padding: 0 12px !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    min-width: 0 !important;
+    flex: 1 !important;
   }
 
   .cw-language-toggle {
-    min-height: 52px !important;
-    padding: 0 16px !important;
-    gap: 8px !important;
+    min-height: 40px !important;
+    height: 40px !important;
+    padding: 0 12px !important;
+    gap: 6px !important;
     border-radius: 999px !important;
-  }
-  .cw-language-toggle button {
-    font-size: 13px !important;
-  }
-
-  /* Sidebar Layout & Reordering */
-  .cw-sidebar-root {
-    width: 100% !important;
-    padding: 24px 20px !important;
-    border-radius: var(--radius-panel) !important;
-    display: flex !important;
-    flex-direction: column !important;
-  }
-  .cw-nav-item {
-    min-height: 56px !important;
-    padding: 0 20px !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
-    gap: 12px !important;
-    border-radius: 20px !important;
-  }
-  .cw-nav-item svg,
-  .cw-nav-item .material-symbols-outlined {
     flex-shrink: 0 !important;
-    font-size: 28px !important;
-  }
-  .cw-nav-item span:not(.material-symbols-outlined),
-  .cw-nav-item a {
-    font-size: 20px !important;
-    line-height: 1.2 !important;
-  }
-  
-  /* Flex Ordering & Legend Shrinking */
-  .cw-mobile-sidebar-inner {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 20px !important;
-  }
-  .cw-mobile-nav-primary {
-    order: 1 !important;
-  }
-  .cw-mobile-legend {
-    order: 2 !important;
-  }
-  .cw-mobile-staff-link {
-    order: 3 !important;
-    margin-top: 16px !important;
-    opacity: 0.85 !important;
-  }
-  .cw-legend-root {
-    padding: 0 4px !important;
-  }
-  .cw-legend-root > p {
-    font-size: 11px !important;
-    letter-spacing: 0.16em !important;
-    margin-bottom: 12px !important;
-  }
-  .cw-legend-row {
-    min-height: 32px !important;
-    gap: 12px !important;
-    font-size: 14px !important;
-  }
-  .cw-legend-row > span.shrink-0 {
-    width: 20px !important;
-    height: 20px !important;
-    border-radius: 6px !important;
   }
 
-  /* Booking Panel Refinements */
-  .cw-glass-panel {
-    width: 100% !important;
-    padding: 28px 20px !important;
-    border-radius: var(--radius-panel) !important;
+  .cw-language-toggle button {
+    font-size: 11px !important;
   }
-  
-  /* Panel Header Stacking */
+
+  /* Panel Heading: Prevents Badge & Title Overlap */
   .cw-panel-heading {
     display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 12px !important;
-    margin-bottom: 24px !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    margin-bottom: 16px !important;
   }
+
   .cw-panel-heading h2 {
-    font-size: 24px !important;
-    line-height: 1.12 !important;
+    font-size: 18px !important;
+    line-height: 1.2 !important;
   }
+
   .cw-panel-badge {
-    font-size: 12px !important;
-    padding: 8px 16px !important;
+    font-size: 10px !important;
+    padding: 4px 10px !important;
     border-radius: 999px !important;
   }
 
-  /* Slot Grid & Cards */
+  /* Compact Slot Cards on Mobile */
   .cw-slot-grid {
-    gap: 20px !important;
+    gap: 12px !important;
+    grid-template-columns: 1fr !important;
   }
 
   .cw-slot-card-root {
-    min-height: 136px !important;
-    padding: 24px 28px !important;
-    border-radius: var(--radius-panel) !important;
+    min-height: 112px !important;
+    padding: 14px 18px !important;
+    border-radius: 14px !important;
   }
+
   .cw-slot-card-inner {
-    gap: 16px !important;
+    gap: 10px !important;
   }
+
   .cw-slot-time {
-    font-size: 32px !important;
+    font-size: 22px !important;
     line-height: 1 !important;
   }
+
   .cw-slot-price,
   .cw-slot-status {
-    font-size: 20px !important;
+    font-size: 15px !important;
     line-height: 1.1 !important;
+  }
+
+  .cw-slot-cta {
+    font-size: 10px !important;
+  }
+
+  /* Confirmation modal/page cards */
+  .cw-confirmation-card {
+    padding: 20px 16px !important;
+    border-radius: 16px !important;
+  }
+
+  .cw-confirmation-section {
+    padding: 14px 12px !important;
+  }
+
+  .cw-confirmation-instructions {
+    padding: 14px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.45 !important;
   }
 }
