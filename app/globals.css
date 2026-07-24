@@ -174,8 +174,8 @@
   --state-error-dark: #CA2F34;
   --state-error-soft: #FCE3E2;
 
-  --state-available-bg: #F8F6F0;
-  --state-available-border: #C8C2B8;
+  --state-available-bg: #ffffff;
+  --state-available-border: #DDD7CC;
   --state-available-accent: #317C78;
   --state-occupied-bg: #FFF1A8;
   --state-occupied-border: #F8C51C;
@@ -582,33 +582,44 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden !important;
   border-radius: var(--radius-card) !important;
   min-height: 128px !important;
-  padding: 28px 32px !important;
-  /* Border MUST be set here — borderColor inline style is inert without it */
-  border: 1.5px solid var(--state-available-border) !important;
-  box-shadow: 0 2px 8px var(--brand-border-subtle) !important;
-  transition: box-shadow 0.2s ease, transform 0.15s ease !important;
+  padding: 22px 26px !important;
+  border: 1.5px solid var(--brand-border) !important;
+  box-shadow: 0 4px 12px var(--brand-border-subtle) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Available: lift on hover */
-.cw-slot-card-root:not(:disabled):hover {
-  box-shadow: 0 6px 18px var(--brand-border-subtle) !important;
-  transform: translateY(-2px) !important;
+/* Available Slot card states */
+.cw-slot-card-root[data-state="available"] {
+  background: var(--state-available-bg) !important;
+  border-color: var(--state-available-border) !important;
 }
 
-/* Override border/shadow for non-available states via data attribute */
+/* Hover state on available slot cards */
+.cw-slot-card-root[data-state="available"]:hover {
+  border-color: var(--brand-secondary) !important;
+  box-shadow: 0 10px 24px var(--brand-border-subtle) !important;
+  transform: translateY(-4px) !important;
+}
+
+/* Selected Slot card states */
 .cw-slot-card-root[data-state="selected"] {
+  background: linear-gradient(135deg, var(--state-selected-bg), var(--state-selected-bg-end)) !important;
   border-color: var(--state-selected-bg) !important;
   box-shadow: var(--shadow-selected) !important;
   transform: none !important;
 }
 
+/* Occupied Slot card states */
 .cw-slot-card-root[data-state="occupied"] {
+  background: var(--state-occupied-bg) !important;
   border-color: var(--state-occupied-border) !important;
   box-shadow: none !important;
   transform: none !important;
 }
 
+/* Passed Slot card states */
 .cw-slot-card-root[data-state="passed"] {
+  background: var(--state-passed-bg) !important;
   border-color: var(--state-passed-border) !important;
   box-shadow: none !important;
   transform: none !important;

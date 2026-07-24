@@ -30,8 +30,6 @@ export default function SlotCard({ slot, isSelected, onClick, isPast }: SlotCard
   const formattedPrice = formatPrice(displayPrice, currency);
 
   // ── Derive state ────────────────────────────────────────────────────────────
-  const isOccupied = !isAvailable && !isPast;
-
   const state: "available" | "selected" | "occupied" | "passed" =
     isPast ? "passed"
     : !isAvailable ? "occupied"
@@ -44,37 +42,6 @@ export default function SlotCard({ slot, isSelected, onClick, isPast }: SlotCard
     : formattedPrice;
 
   const showReserveCta = state === "available" || state === "selected";
-
-  // ── Per-state styles (all CSS variables) ────────────────────────────────────
-  const cardStyle: React.CSSProperties = (() => {
-    switch (state) {
-      case "passed":
-        return {
-          background: "var(--state-passed-bg)",
-          color: "var(--state-passed-text)",
-          cursor: "not-allowed",
-          opacity: 0.8,
-        };
-      case "occupied":
-        return {
-          background: "var(--state-occupied-bg)",
-          color: "var(--state-occupied-text)",
-          cursor: "not-allowed",
-        };
-      case "selected":
-        return {
-          background: "linear-gradient(145deg, var(--state-selected-bg), var(--state-selected-bg-end))",
-          color: "var(--state-selected-text)",
-        };
-      case "available":
-      default:
-        return {
-          background: "var(--state-available-bg)",
-          color: "var(--brand-text)",
-          cursor: "pointer",
-        };
-    }
-  })();
 
   // ── Per-state text colors ───────────────────────────────────────────────────
   const iconColor =
@@ -102,7 +69,7 @@ export default function SlotCard({ slot, isSelected, onClick, isPast }: SlotCard
     : "var(--brand-text-strong)";
 
   const ctaColor =
-    state === "selected" ? "rgba(255,255,255,0.85)"
+    state === "selected" ? "rgba(255,255,255,0.9)"
     : "var(--brand-accent)";
 
   const peakBadgeStyle: React.CSSProperties =
@@ -120,8 +87,25 @@ export default function SlotCard({ slot, isSelected, onClick, isPast }: SlotCard
       onClick={!isPast && isAvailable ? onClick : undefined}
       data-state={state}
       className="cw-slot-card-root flex text-left transition-all w-full group"
-      style={cardStyle}
     >
+      {/* Yellow decorative accent triangle corner on selected card */}
+      {state === "selected" && (
+        <span
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            width: 0,
+            height: 0,
+            borderStyle: "solid",
+            borderWidth: "0 18px 18px 0",
+            borderColor: "transparent var(--brand-highlight) transparent transparent",
+            zIndex: 10,
+          }}
+        />
+      )}
+
       {/* Teal left-accent strip on available cards */}
       {state === "available" && (
         <span
@@ -131,15 +115,17 @@ export default function SlotCard({ slot, isSelected, onClick, isPast }: SlotCard
             left: 0,
             top: "20%",
             bottom: "20%",
-            width: "3px",
+            width: "3.5px",
             borderRadius: "0 3px 3px 0",
             background: "var(--state-available-accent)",
-            opacity: 0.6,
+            opacity: 0.8,
+            transition: "all 0.25s ease",
           }}
+          className="group-hover:scale-y-125 group-hover:opacity-100"
         />
       )}
 
-      <div className="cw-slot-card-inner h-full w-full flex flex-col justify-between items-start gap-[16px]">
+      <div className="cw-slot-card-inner h-full w-full flex flex-col justify-between items-start gap-[16px] z-10 relative">
         {/* Top row: time + peak badge */}
         <div className="flex flex-col items-start w-full gap-[6px]">
           <div className="flex items-center justify-between w-full">
@@ -185,10 +171,10 @@ export default function SlotCard({ slot, isSelected, onClick, isPast }: SlotCard
 
           {showReserveCta && (
             <span
-              className={`text-[11px] font-bold tracking-[0.14em] uppercase leading-none whitespace-nowrap transition-opacity ${
+              className={`text-[11px] font-extrabold tracking-[0.14em] uppercase leading-none whitespace-nowrap transition-all duration-200 ${
                 state === "selected"
                   ? "opacity-100"
-                  : "opacity-0 group-hover:opacity-100"
+                  : "opacity-75 group-hover:opacity-100 group-hover:translate-x-1"
               }`}
               style={{ color: ctaColor }}
             >

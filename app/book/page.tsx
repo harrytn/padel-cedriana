@@ -93,34 +93,46 @@ export default function BookPage() {
             border: "1px solid var(--brand-border)",
             boxShadow: "var(--shadow-header)",
             borderRadius: "var(--radius-header)",
-            padding: "16px 28px",
+            padding: "14px 28px",
             gap: "24px",
           }}
         >
           {/* Left: Logo block */}
-          <div className="flex items-center gap-[20px] shrink-0">
+          <div className="flex items-center gap-[24px] shrink-0">
             <HotelLogo />
+            
+            {/* Elegant light blue title panel inside header */}
             <div
               className="hidden md:flex flex-col justify-center"
               style={{
-                borderLeft: "1px solid var(--brand-border)",
-                paddingLeft: "20px",
+                background: "var(--brand-info-softest)",
+                border: "1px solid var(--brand-info-soft)",
+                borderRadius: "var(--radius-card)",
+                padding: "12px 28px",
+                boxShadow: "inset 0 1px 2px rgba(23, 39, 102, 0.02)",
               }}
             >
               <span
-                className="text-[10px] font-bold uppercase theme-text-meta"
-                style={{ letterSpacing: "0.22em" }}
+                className="text-[10px] font-bold uppercase tracking-wider"
+                style={{ letterSpacing: "0.22em", color: "var(--brand-secondary)" }}
               >
                 {eyebrow}
               </span>
-              <span
-                className="text-[18px] font-extrabold tracking-tight leading-tight mt-[2px] theme-text-strong"
+              <h1
+                className="text-[20px] font-extrabold tracking-tight leading-tight mt-[2px]"
+                style={{ color: "var(--brand-primary)" }}
               >
                 {t.book_title}
-              </span>
-              <span className="text-[12px] font-medium theme-text-muted capitalize mt-[1px]">
-                {selectedDate ? formatLocalizedDate(selectedDate, lang) : ""}
-              </span>
+              </h1>
+              <div className="flex items-center gap-2 mt-[2px]">
+                <span className="text-[12px] font-semibold capitalize" style={{ color: "var(--brand-text-muted)" }}>
+                  {selectedDate ? formatLocalizedDate(selectedDate, lang) : ""}
+                </span>
+                <span className="text-[12px]" style={{ color: "var(--brand-text-metadata)" }}>•</span>
+                <span className="text-[12px] font-medium" style={{ color: "var(--brand-text-muted)" }}>
+                  {t.book_subtitle}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -170,6 +182,75 @@ export default function BookPage() {
               gap: "20px",
             }}
           >
+            {/* Court summary card with CSS court lines */}
+            <div
+              style={{
+                background: "linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%)",
+                borderRadius: "var(--radius-card)",
+                padding: "20px",
+                position: "relative",
+                color: "#ffffff",
+                overflow: "hidden",
+                boxShadow: "0 8px 24px rgba(23, 39, 102, 0.15)",
+                minHeight: "150px",
+              }}
+            >
+              {/* CSS Court Line Illustration */}
+              <div
+                style={{
+                  position: "absolute",
+                  right: "-20px",
+                  bottom: "-20px",
+                  width: "120px",
+                  height: "120px",
+                  border: "2px solid rgba(255, 255, 255, 0.15)",
+                  borderRadius: "8px",
+                  pointerEvents: "none",
+                  transform: "rotate(-15deg)",
+                }}
+              >
+                <div style={{ position: "absolute", left: "50%", top: 0, bottom: 0, width: "2px", background: "rgba(255, 255, 255, 0.15)" }} />
+                <div style={{ position: "absolute", top: "50%", left: 0, right: 0, height: "2px", background: "rgba(255, 255, 255, 0.15)" }} />
+                <div style={{ position: "absolute", left: "15%", right: "15%", top: "15%", bottom: "15%", border: "1.5px dashed rgba(255, 255, 255, 0.12)" }} />
+              </div>
+
+              {/* Yellow marker "01" */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: "16px",
+                  right: "16px",
+                  background: "var(--brand-highlight)",
+                  color: "var(--brand-primary)",
+                  fontWeight: 900,
+                  fontSize: "10px",
+                  padding: "2px 8px",
+                  borderRadius: "6px",
+                  letterSpacing: "0.05em",
+                }}
+              >
+                COURT 01
+              </div>
+
+              {/* Details */}
+              <div className="flex flex-col h-full justify-between z-10 relative">
+                <div>
+                  <span
+                    className="text-[10px] font-bold uppercase tracking-wider"
+                    style={{ color: "rgba(255, 255, 255, 0.7)", letterSpacing: "0.1em" }}
+                  >
+                    Active court
+                  </span>
+                  <h3 className="text-[18px] font-bold leading-tight mt-1" style={{ fontFamily: "var(--font-family-headline-lg)" }}>
+                    Court Panoramique
+                  </h3>
+                </div>
+                <div className="mt-8 text-[11px] font-medium" style={{ color: "rgba(255, 255, 255, 0.85)" }}>
+                  Extérieur • Gazon synthétique
+                </div>
+              </div>
+            </div>
+
             {/* Court nav item */}
             <nav>
               <a
