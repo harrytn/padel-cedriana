@@ -8,7 +8,30 @@ import { SlotData } from "@/components/booking/SlotCard";
 import { ACTIVE_THEME } from "@/lib/theme";
 import HotelLogo from "@/components/ui/HotelLogo";
 import { formatLocalizedDate } from "@/lib/i18n/date";
-import { Trophy, ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
+
+function PadelIcon({ size = 22, className = "shrink-0", style }: { size?: number; className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      style={{ color: "var(--brand-accent)", ...style }}
+    >
+      <path d="M12 2C8.13 2 5 5.13 5 9c0 3.2 2.15 5.9 5.08 6.74L9 21h6l-1.08-5.26C16.85 14.9 19 12.2 19 9c0-3.87-3.13-7-7-7z" />
+      <line x1="10" y1="18" x2="14" y2="18" />
+      <circle cx="10" cy="7.5" r="0.75" fill="currentColor" />
+      <circle cx="14" cy="7.5" r="0.75" fill="currentColor" />
+      <circle cx="12" cy="10" r="0.75" fill="currentColor" />
+    </svg>
+  );
+}
 
 function todayISO(): string {
   const d = new Date();
@@ -265,11 +288,7 @@ export default function BookPage() {
                   minHeight: "52px",
                 }}
               >
-                <Trophy
-                  size={20}
-                  className="shrink-0"
-                  style={{ color: "var(--brand-secondary)" }}
-                />
+                <PadelIcon size={20} className="shrink-0" />
                 {t.courts}
               </a>
             </nav>
@@ -382,11 +401,7 @@ export default function BookPage() {
               <h2
                 className="font-bold tracking-tight flex items-center theme-text-strong text-[18px] sm:text-[20px] gap-2.5"
               >
-                <Trophy
-                  size={22}
-                  className="shrink-0"
-                  style={{ color: "var(--brand-secondary)" }}
-                />
+                <PadelIcon size={22} className="shrink-0" />
                 {t.availableSlots}
               </h2>
               <span
