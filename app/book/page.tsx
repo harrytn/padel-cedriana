@@ -7,6 +7,7 @@ import CheckoutModal from "@/components/booking/CheckoutModal";
 import { SlotData } from "@/components/booking/SlotCard";
 import { ACTIVE_THEME } from "@/lib/theme";
 import HotelLogo from "@/components/ui/HotelLogo";
+import { formatLocalizedDate } from "@/lib/i18n/date";
 
 function todayISO(): string {
   const d = new Date();
@@ -18,8 +19,6 @@ function maxISO(): string {
   d.setDate(d.getDate() + 14);
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
-
-import { formatLocalizedDate } from "@/lib/i18n/date";
 
 export default function BookPage() {
   const { t, lang } = useI18n();
@@ -77,63 +76,76 @@ export default function BookPage() {
     : (ACTIVE_THEME.shortName ?? ACTIVE_THEME.name).toUpperCase();
 
   return (
-    <div className="theme-bg min-h-screen">
+    <div
+      className="min-h-screen"
+      style={{ background: "var(--brand-bg)" }}
+    >
+      <div
+        className="max-w-[1400px] mx-auto"
+        style={{ padding: "28px 32px" }}
+      >
 
-      <div className="max-w-[1500px] mx-auto px-8 py-8">
-        
         {/* ── TOP HEADER ── */}
         <header
-          className="cw-mobile-header flex items-center justify-between gap-8"
+          className="cw-mobile-header flex items-center justify-between"
           style={{
             background: "var(--brand-surface)",
             border: "1px solid var(--brand-border)",
             boxShadow: "var(--shadow-header)",
             borderRadius: "var(--radius-header)",
-            padding: "20px 32px",
+            padding: "16px 28px",
+            gap: "24px",
           }}
         >
-          <div className="cw-mobile-title-row flex items-center justify-between gap-4 w-full md:w-auto">
-            {/* Left: Logo + eyebrow */}
-            <div className="flex items-center gap-[16px] shrink-0">
-              <HotelLogo />
-              <div className="hidden sm:flex flex-col justify-center">
-                <span
-                  className="text-[10px] font-bold tracking-[0.18em] uppercase theme-text-meta"
-                  style={{ letterSpacing: "0.18em" }}
-                >
-                  {eyebrow}
-                </span>
-              </div>
-            </div>
-            
-            {/* Center: Title */}
-            <div className="flex-1 flex flex-col justify-center sm:text-left text-right">
-              <h1
-                className="text-[20px] sm:text-[26px] md:text-[32px] font-extrabold tracking-tight leading-tight theme-text-strong"
+          {/* Left: Logo block */}
+          <div className="flex items-center gap-[20px] shrink-0">
+            <HotelLogo />
+            <div
+              className="hidden md:flex flex-col justify-center"
+              style={{
+                borderLeft: "1px solid var(--brand-border)",
+                paddingLeft: "20px",
+              }}
+            >
+              <span
+                className="text-[10px] font-bold uppercase theme-text-meta"
+                style={{ letterSpacing: "0.22em" }}
+              >
+                {eyebrow}
+              </span>
+              <span
+                className="text-[18px] font-extrabold tracking-tight leading-tight mt-[2px] theme-text-strong"
               >
                 {t.book_title}
-              </h1>
-              <span className="text-[13px] sm:text-[15px] font-medium theme-text-muted capitalize mt-1 hidden sm:block">
+              </span>
+              <span className="text-[12px] font-medium theme-text-muted capitalize mt-[1px]">
                 {selectedDate ? formatLocalizedDate(selectedDate, lang) : ""}
               </span>
             </div>
           </div>
 
+          {/* Mobile: title centered */}
+          <div className="flex-1 md:hidden text-center">
+            <h1 className="text-[18px] font-extrabold tracking-tight theme-text-strong">
+              {t.book_title}
+            </h1>
+          </div>
+
           {/* Right: Controls */}
-          <div className="cw-mobile-controls-row flex items-center gap-6 shrink-0 w-full md:w-auto">
+          <div className="cw-mobile-controls-row flex items-center gap-[12px] shrink-0">
             <input
               type="date"
               value={selectedDate}
               min={todayISO()}
               max={maxISO()}
               onChange={(e) => { setSelectedDate(e.target.value); setSelectedSlot(null); }}
-              className="h-12 px-5 text-[15px] font-bold outline-none cursor-pointer w-full md:w-auto"
+              className="h-11 px-4 text-[14px] font-bold outline-none cursor-pointer"
               style={{
-                background: "var(--brand-surface)",
+                background: "var(--brand-surface-neutral)",
                 border: "1px solid var(--brand-border)",
                 borderRadius: "var(--radius-control)",
                 color: "var(--brand-text-strong)",
-                boxShadow: "0 1px 4px var(--brand-border-subtle)",
+                minWidth: "140px",
               }}
             />
             <LanguageToggle />
@@ -141,119 +153,174 @@ export default function BookPage() {
         </header>
 
         {/* ── MAIN CONTENT LAYOUT ── */}
-        <div className="cw-mobile-main-flow lg:grid lg:grid-cols-[280px_1fr] lg:gap-[40px] items-start mt-[48px]">
-          
+        <div
+          className="cw-mobile-main-flow lg:grid lg:grid-cols-[260px_1fr] items-start"
+          style={{ gap: "24px", marginTop: "24px" }}
+        >
+
           {/* ── SIDEBAR ── */}
-          <aside className="cw-sidebar-root cw-mobile-sidebar-second flex flex-col gap-[28px]">
-            <div className="cw-mobile-sidebar-inner flex flex-col gap-[28px]">
-              {/* Primary Navigation */}
-              <nav className="cw-mobile-nav-primary flex flex-col gap-[12px]">
-                <a
-                  href="#"
-                  className="cw-nav-item transition-all font-bold text-[15px]"
-                  style={{
-                    background: "var(--brand-surface-neutral)",
-                    color: "var(--brand-text-strong)",
-                    border: "1px solid var(--brand-border)",
-                  }}
-                >
-                  <span
-                    className="material-symbols-outlined text-[24px]"
-                    style={{ color: "var(--brand-secondary)" }}
-                  >
-                    sports_tennis
-                  </span>
-                  {t.courts}
-                </a>
-              </nav>
-
-              {/* Legend */}
-              <div className="cw-mobile-legend cw-legend-root">
-                <p
-                  className="text-[12px] font-bold uppercase tracking-widest mb-[16px] theme-text-meta"
-                >
-                  {t.legend}
-                </p>
-                <ul className="flex flex-col gap-[12px]">
-                  <li className="cw-legend-row text-[14px] font-medium theme-text-muted">
-                    <span
-                      className="w-4 h-4 rounded-md border-2 shrink-0"
-                      style={{
-                        background: "var(--state-available-bg)",
-                        borderColor: "var(--state-available-accent)",
-                      }}
-                    />
-                    {t.available}
-                  </li>
-                  <li className="cw-legend-row text-[14px] font-medium theme-text-muted">
-                    <span
-                      className="w-4 h-4 rounded-md shrink-0"
-                      style={{
-                        background: "var(--state-occupied-bg)",
-                        border: "1px solid var(--state-occupied-border)",
-                      }}
-                    />
-                    {t.occupied}
-                  </li>
-                  <li className="cw-legend-row text-[14px] font-medium theme-text-muted">
-                    <span
-                      className="w-4 h-4 rounded-md shrink-0"
-                      style={{ background: "var(--state-selected-bg)" }}
-                    />
-                    {t.selected}
-                  </li>
-                  <li className="cw-legend-row text-[14px] font-medium theme-text-muted">
-                    <span
-                      className="w-4 h-4 rounded-md shrink-0"
-                      style={{
-                        background: "var(--state-passed-bg)",
-                        border: "1px solid var(--state-passed-border)",
-                      }}
-                    />
-                    {t.passed}
-                  </li>
-                </ul>
-              </div>
-
-              {/* Secondary Navigation */}
-              <nav className="cw-mobile-staff-link flex flex-col gap-[12px]">
-                <a
-                  href="/admin"
-                  className="cw-nav-item transition-all font-semibold text-[15px] theme-text-muted"
-                  style={{ "--hover-bg": "var(--brand-surface-neutral)" } as React.CSSProperties}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = "var(--brand-surface-neutral)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-                >
-                  <span
-                    className="material-symbols-outlined text-[24px] theme-text-meta"
-                  >
-                    admin_panel_settings
-                  </span>
-                  {t.staffAccess}
-                </a>
-              </nav>
-            </div>
-          </aside>
-
-          {/* ── WHITE CARD GRID PANEL ── */}
-          <main className="cw-glass-panel cw-mobile-booking-first flex flex-col">
-            <div className="cw-panel-heading flex items-center justify-between mb-[32px]">
-              <h2
-                className="text-[20px] sm:text-[24px] font-bold tracking-tight flex items-center gap-3 theme-text-strong"
+          <aside
+            className="cw-mobile-sidebar-second flex flex-col"
+            style={{
+              background: "var(--brand-surface)",
+              border: "1px solid var(--brand-border)",
+              boxShadow: "var(--shadow-header)",
+              borderRadius: "var(--radius-panel)",
+              padding: "24px 20px",
+              gap: "20px",
+            }}
+          >
+            {/* Court nav item */}
+            <nav>
+              <a
+                href="#"
+                className="flex items-center font-bold text-[14px] transition-all"
+                style={{
+                  background: "var(--brand-surface-neutral)",
+                  color: "var(--brand-text-strong)",
+                  border: "1px solid var(--brand-border)",
+                  borderRadius: "var(--radius-card)",
+                  padding: "14px 16px",
+                  gap: "12px",
+                  minHeight: "52px",
+                }}
               >
                 <span
-                  className="material-symbols-outlined text-3xl shrink-0"
+                  className="material-symbols-outlined text-[22px] shrink-0"
                   style={{ color: "var(--brand-secondary)" }}
+                >
+                  sports_tennis
+                </span>
+                {t.courts}
+              </a>
+            </nav>
+
+            {/* Divider */}
+            <div style={{ borderTop: "1px solid var(--brand-border)" }} />
+
+            {/* Legend */}
+            <div>
+              <p
+                className="text-[11px] font-bold uppercase theme-text-meta"
+                style={{ letterSpacing: "0.16em", marginBottom: "12px" }}
+              >
+                {t.legend}
+              </p>
+              <ul className="flex flex-col" style={{ gap: "10px" }}>
+                <li className="flex items-center theme-text-muted text-[13px] font-medium" style={{ gap: "12px" }}>
+                  <span
+                    className="shrink-0"
+                    style={{
+                      width: "16px", height: "16px",
+                      borderRadius: "5px",
+                      background: "var(--state-available-bg)",
+                      border: "2px solid var(--state-available-accent)",
+                      display: "inline-block",
+                    }}
+                  />
+                  {t.available}
+                </li>
+                <li className="flex items-center theme-text-muted text-[13px] font-medium" style={{ gap: "12px" }}>
+                  <span
+                    className="shrink-0"
+                    style={{
+                      width: "16px", height: "16px",
+                      borderRadius: "5px",
+                      background: "var(--state-occupied-bg)",
+                      border: "1px solid var(--state-occupied-border)",
+                      display: "inline-block",
+                    }}
+                  />
+                  {t.occupied}
+                </li>
+                <li className="flex items-center theme-text-muted text-[13px] font-medium" style={{ gap: "12px" }}>
+                  <span
+                    className="shrink-0"
+                    style={{
+                      width: "16px", height: "16px",
+                      borderRadius: "5px",
+                      background: "var(--state-selected-bg)",
+                      display: "inline-block",
+                    }}
+                  />
+                  {t.selected}
+                </li>
+                <li className="flex items-center theme-text-muted text-[13px] font-medium" style={{ gap: "12px" }}>
+                  <span
+                    className="shrink-0"
+                    style={{
+                      width: "16px", height: "16px",
+                      borderRadius: "5px",
+                      background: "var(--state-passed-bg)",
+                      border: "1px solid var(--state-passed-border)",
+                      display: "inline-block",
+                    }}
+                  />
+                  {t.passed}
+                </li>
+              </ul>
+            </div>
+
+            {/* Divider */}
+            <div style={{ borderTop: "1px solid var(--brand-border)" }} />
+
+            {/* Staff access */}
+            <a
+              href="/admin"
+              className="flex items-center font-semibold text-[13px] transition-all theme-text-muted"
+              style={{
+                borderRadius: "var(--radius-card)",
+                padding: "12px 14px",
+                gap: "10px",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--brand-surface-neutral)";
+                e.currentTarget.style.color = "var(--brand-text-strong)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.color = "var(--brand-text-muted)";
+              }}
+            >
+              <span className="material-symbols-outlined text-[20px] shrink-0" style={{ color: "var(--brand-text-meta)" }}>
+                admin_panel_settings
+              </span>
+              {t.staffAccess}
+            </a>
+          </aside>
+
+          {/* ── BOOKING PANEL ── */}
+          <main
+            className="cw-mobile-booking-first flex flex-col"
+            style={{
+              background: "var(--brand-surface)",
+              border: "1px solid var(--brand-border)",
+              boxShadow: "var(--shadow-panel)",
+              borderRadius: "var(--radius-panel)",
+              padding: "28px 32px",
+            }}
+          >
+            {/* Panel header */}
+            <div className="flex items-center justify-between" style={{ marginBottom: "24px" }}>
+              <h2
+                className="font-bold tracking-tight flex items-center theme-text-strong"
+                style={{ fontSize: "20px", gap: "10px" }}
+              >
+                <span
+                  className="material-symbols-outlined shrink-0"
+                  style={{ fontSize: "26px", color: "var(--brand-secondary)" }}
                 >
                   sports_tennis
                 </span>
                 {t.availableSlots}
               </h2>
               <span
-                className="cw-panel-badge px-4 py-2 rounded-full text-[10px] sm:text-xs font-bold tracking-widest shadow-sm shrink-0 uppercase theme-text-meta"
+                className="text-[11px] font-bold tracking-widest uppercase shrink-0 theme-text-meta"
                 style={{
                   background: "var(--brand-surface-neutral)",
                   border: "1px solid var(--brand-border)",
+                  borderRadius: "var(--radius-pill)",
+                  padding: "6px 14px",
                 }}
               >
                 {slots.length > 0 ? (
@@ -268,11 +335,14 @@ export default function BookPage() {
 
             {slotTakenError && (
               <div
-                className="mb-7 px-[20px] py-[16px] rounded-[8px] text-[14px] font-bold text-center"
+                className="text-[13px] font-bold text-center"
                 style={{
                   background: "var(--state-error-soft)",
                   border: "1px solid var(--state-error)",
                   color: "var(--state-error-dark)",
+                  borderRadius: "var(--radius-card)",
+                  padding: "14px 20px",
+                  marginBottom: "20px",
                 }}
               >
                 ⚠️ {t.checkout_slot_taken}
@@ -292,11 +362,16 @@ export default function BookPage() {
             />
 
             <div
-              className="mt-8 pt-6 border-t text-center theme-border"
+              className="text-center theme-text-meta"
+              style={{
+                marginTop: "24px",
+                paddingTop: "20px",
+                borderTop: "1px solid var(--brand-border)",
+                fontSize: "12px",
+                fontWeight: 500,
+              }}
             >
-              <p className="text-[13px] font-medium theme-text-meta">
-                {t.footerArrivalNote}
-              </p>
+              {t.footerArrivalNote}
             </div>
           </main>
         </div>

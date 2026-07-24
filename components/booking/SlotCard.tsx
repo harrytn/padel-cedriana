@@ -23,120 +23,134 @@ interface SlotCardProps {
   isPast?: boolean;
 }
 
-const BASE = "cw-slot-card-root flex text-left transition-all w-full";
-
 export default function SlotCard({ slot, isSelected, onClick, isPast }: SlotCardProps) {
   const { t } = useI18n();
   const { slotStart, isAvailable, isPeak, basePrice, peakPremium, durationMinutes, currency } = slot;
   const displayPrice = basePrice + (isPeak ? peakPremium : 0);
   const formattedPrice = formatPrice(displayPrice, currency);
 
-  // ── Derive per-state inline styles (all via CSS variables) ──────────────
-  let cardStyle: React.CSSProperties = {};
-  let statusOrPrice = "";
-  let showReserveCta = false;
-  let isOccupied = false;
+  // ── Derive state ────────────────────────────────────────────────────────────
+  const isOccupied = !isAvailable && !isPast;
 
-  if (isPast) {
-    cardStyle = {
-      background: "var(--state-passed-bg)",
-      borderColor: "var(--state-passed-border)",
-      color: "var(--state-passed-text)",
-      cursor: "not-allowed",
-    };
-    statusOrPrice = t.passed;
-  } else if (!isAvailable) {
-    cardStyle = {
-      background: "var(--state-occupied-bg)",
-      borderColor: "var(--state-occupied-border)",
-      color: "var(--state-occupied-text)",
-      cursor: "not-allowed",
-    };
-    statusOrPrice = t.book_booked;
-    isOccupied = true;
-  } else if (isSelected) {
-    cardStyle = {
-      background: `linear-gradient(135deg, var(--state-selected-bg), var(--state-selected-bg-end))`,
-      borderColor: "var(--state-selected-bg)",
-      color: "var(--state-selected-text)",
-      boxShadow: "var(--shadow-selected)",
-    };
-    statusOrPrice = formattedPrice;
-    showReserveCta = true;
-  } else {
-    cardStyle = {
-      background: "var(--state-available-bg)",
-      borderColor: "var(--state-available-border)",
-      color: "var(--brand-text)",
-    };
-    statusOrPrice = formattedPrice;
-    showReserveCta = true;
-  }
+  const state: "available" | "selected" | "occupied" | "passed" =
+    isPast ? "passed"
+    : !isAvailable ? "occupied"
+    : isSelected ? "selected"
+    : "available";
 
-  // ── Per-state text colors (CSS variables) ────────────────────────────────
-  const iconColor = isPast
-    ? "var(--state-passed-text)"
-    : isOccupied
-    ? "var(--state-occupied-text)"
-    : isSelected
-    ? "var(--state-selected-text)"
+  const statusOrPrice =
+    state === "passed" ? t.passed
+    : state === "occupied" ? t.book_booked
+    : formattedPrice;
+
+  const showReserveCta = state === "available" || state === "selected";
+
+  // ── Per-state styles (all CSS variables) ────────────────────────────────────
+  const cardStyle: React.CSSProperties = (() => {
+    switch (state) {
+      case "passed":
+        return {
+          background: "var(--state-passed-bg)",
+          color: "var(--state-passed-text)",
+          cursor: "not-allowed",
+          opacity: 0.8,
+        };
+      case "occupied":
+        return {
+          background: "var(--state-occupied-bg)",
+          color: "var(--state-occupied-text)",
+          cursor: "not-allowed",
+        };
+      case "selected":
+        return {
+          background: "linear-gradient(145deg, var(--state-selected-bg), var(--state-selected-bg-end))",
+          color: "var(--state-selected-text)",
+        };
+      case "available":
+      default:
+        return {
+          background: "var(--state-available-bg)",
+          color: "var(--brand-text)",
+          cursor: "pointer",
+        };
+    }
+  })();
+
+  // ── Per-state text colors ───────────────────────────────────────────────────
+  const iconColor =
+    state === "passed" ? "var(--state-passed-text)"
+    : state === "occupied" ? "var(--state-occupied-text)"
+    : state === "selected" ? "var(--state-selected-text)"
     : "var(--brand-secondary)";
 
-  const durationColor = isPast
-    ? "var(--state-passed-text)"
-    : isOccupied
-    ? "var(--state-occupied-text)"
-    : isSelected
-    ? "rgba(255,255,255,0.75)"
+  const timeColor =
+    state === "passed" ? "var(--state-passed-text)"
+    : state === "occupied" ? "var(--state-occupied-text)"
+    : state === "selected" ? "var(--state-selected-text)"
+    : "var(--brand-text-strong)";
+
+  const durationColor =
+    state === "passed" ? "var(--state-passed-text)"
+    : state === "occupied" ? "var(--state-occupied-text)"
+    : state === "selected" ? "rgba(255,255,255,0.75)"
     : "var(--brand-text-muted)";
 
-  const priceColor = isPast
-    ? "var(--state-passed-text)"
-    : isOccupied
-    ? "var(--state-occupied-text)"
-    : isSelected
-    ? "var(--state-selected-text)"
+  const priceColor =
+    state === "passed" ? "var(--state-passed-text)"
+    : state === "occupied" ? "var(--state-occupied-text)"
+    : state === "selected" ? "var(--state-selected-text)"
     : "var(--brand-text-strong)";
 
-  const ctaColor = isSelected ? "rgba(255,255,255,0.85)" : "var(--brand-text-muted)";
+  const ctaColor =
+    state === "selected" ? "rgba(255,255,255,0.85)"
+    : "var(--brand-accent)";
 
-  const timeColor = isSelected
-    ? "var(--state-selected-text)"
-    : isOccupied
-    ? "var(--state-occupied-text)"
-    : isPast
-    ? "var(--state-passed-text)"
-    : "var(--brand-text-strong)";
-
-  const peakBadgeStyle: React.CSSProperties = isSelected
-    ? {
-        background: "rgba(255,255,255,0.20)",
-        color: "var(--state-selected-text)",
-      }
-    : {
-        background: "var(--state-peak-bg)",
-        color: "var(--state-peak-text)",
-        border: "1px solid var(--brand-highlight-soft)",
-      };
+  const peakBadgeStyle: React.CSSProperties =
+    state === "selected"
+      ? { background: "rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.9)" }
+      : {
+          background: "var(--state-peak-bg)",
+          color: "var(--state-peak-text)",
+          border: "1px solid var(--brand-highlight-soft)",
+        };
 
   return (
     <button
       disabled={isPast || !isAvailable}
       onClick={!isPast && isAvailable ? onClick : undefined}
-      className={`${BASE}`}
+      data-state={state}
+      className="cw-slot-card-root flex text-left transition-all w-full group"
       style={cardStyle}
     >
-      <div className="cw-slot-card-inner h-full w-full flex flex-col justify-between items-start gap-[20px]">
-        <div className="flex flex-col items-start w-full">
+      {/* Teal left-accent strip on available cards */}
+      {state === "available" && (
+        <span
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            left: 0,
+            top: "20%",
+            bottom: "20%",
+            width: "3px",
+            borderRadius: "0 3px 3px 0",
+            background: "var(--state-available-accent)",
+            opacity: 0.6,
+          }}
+        />
+      )}
+
+      <div className="cw-slot-card-inner h-full w-full flex flex-col justify-between items-start gap-[16px]">
+        {/* Top row: time + peak badge */}
+        <div className="flex flex-col items-start w-full gap-[6px]">
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-[8px]">
               <Clock
-                className="h-[20px] w-[20px] shrink-0"
+                className="h-[18px] w-[18px] shrink-0"
                 strokeWidth={2}
                 style={{ color: iconColor }}
               />
               <span
-                className="cw-slot-time text-[24px] font-bold leading-none"
+                className="text-[22px] font-bold leading-none tracking-tight"
                 style={{ color: timeColor }}
               >
                 {slotStart}
@@ -144,25 +158,26 @@ export default function SlotCard({ slot, isSelected, onClick, isPast }: SlotCard
             </div>
             {isPeak && (
               <span
-                className="text-[10px] font-bold px-[8px] py-[4px] rounded-full flex items-center gap-[4px] shrink-0"
+                className="text-[10px] font-bold px-[8px] py-[3px] rounded-full flex items-center gap-[4px] shrink-0"
                 style={peakBadgeStyle}
               >
-                <Zap size={10} fill="currentColor" /> Peak
+                <Zap size={9} fill="currentColor" /> Peak
               </span>
             )}
           </div>
 
           <span
-            className="cw-slot-duration mt-[8px] text-[12px] font-bold tracking-[0.12em] uppercase leading-none"
+            className="text-[11px] font-bold tracking-[0.12em] uppercase leading-none"
             style={{ color: durationColor }}
           >
             {t.book_duration.replace("{count}", durationMinutes.toString())}
           </span>
         </div>
 
-        <div className="w-full flex items-end justify-between gap-[16px] pt-[16px] mt-auto">
+        {/* Bottom row: price + CTA */}
+        <div className="w-full flex items-center justify-between gap-[12px] mt-auto">
           <span
-            className="cw-slot-price cw-slot-status text-[16px] font-bold leading-none"
+            className="text-[16px] font-bold leading-none"
             style={{ color: priceColor }}
           >
             {statusOrPrice}
@@ -170,10 +185,14 @@ export default function SlotCard({ slot, isSelected, onClick, isPast }: SlotCard
 
           {showReserveCta && (
             <span
-              className={`cw-slot-cta text-[12px] font-bold tracking-[0.14em] uppercase leading-none whitespace-nowrap ${isSelected ? "" : "opacity-0 lg:opacity-100 transition-opacity"}`}
+              className={`text-[11px] font-bold tracking-[0.14em] uppercase leading-none whitespace-nowrap transition-opacity ${
+                state === "selected"
+                  ? "opacity-100"
+                  : "opacity-0 group-hover:opacity-100"
+              }`}
               style={{ color: ctaColor }}
             >
-              {isSelected ? `✓ ${t.selected}` : `${t.reserve} →`}
+              {state === "selected" ? `✓ ${t.selected}` : `${t.reserve} →`}
             </span>
           )}
         </div>
