@@ -77,8 +77,7 @@ export default function BookPage() {
 
   return (
     <div
-      className="min-h-screen"
-      style={{ background: "var(--brand-bg)" }}
+      className="theme-bg min-h-screen"
     >
       <div
         className="max-w-[1400px] mx-auto"

@@ -117,7 +117,7 @@ export const CEDRIANA_THEME: HotelTheme = {
   shortName: "Cedriana",
   location: "Djerba",
   logo: {
-    src: "/logo-no-bg.png",
+    src: "/logo-no-bg-old.png",
     alt: "Hôtel Cedriana logo",
     desktopWidth: 230,
     mobileWidth: 180,

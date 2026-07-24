@@ -136,7 +136,7 @@ export default function SlotCard({ slot, isSelected, onClick, isPast }: SlotCard
                 style={{ color: iconColor }}
               />
               <span
-                className="text-[22px] font-bold leading-none tracking-tight"
+                className="cw-slot-time text-[22px] font-bold leading-none tracking-tight transition-colors"
                 style={{ color: timeColor }}
               >
                 {slotStart}
@@ -171,10 +171,10 @@ export default function SlotCard({ slot, isSelected, onClick, isPast }: SlotCard
 
           {showReserveCta && (
             <span
-              className={`text-[11px] font-extrabold tracking-[0.14em] uppercase leading-none whitespace-nowrap transition-all duration-200 ${
+              className={`cw-slot-cta text-[11px] font-extrabold tracking-[0.14em] uppercase leading-none whitespace-nowrap transition-all duration-200 ${
                 state === "selected"
                   ? "opacity-100"
-                  : "opacity-75 group-hover:opacity-100 group-hover:translate-x-1"
+                  : "opacity-80 group-hover:opacity-100"
               }`}
               style={{ color: ctaColor }}
             >
